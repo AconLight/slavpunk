@@ -8,9 +8,10 @@ import boost.SpriteObject;
 import com.badlogic.gdx.Gdx;
 import com.mygdx.gameComponents.Clickable;
 import com.mygdx.gameObjects.Test;
+import lobby.AcceptObject;
 
 public class Menu extends MyScene {
-    GameObject bg, play, quit, test;
+    GameObject bg, play, quit, test, accept;
 
     float time, startGameTime;
     public Menu() {
@@ -22,7 +23,7 @@ public class Menu extends MyScene {
         quit.addComponent(new Clickable(quit, (SpriteObject) quit, () -> Gdx.app.exit()));
         quit.setPosition(1920/2 - 320, 1280/2 - 128 - 128 - 64);
         play = AssetLoader.getAsset("play");
-        play.addComponent(new Clickable(play, (SpriteObject) play, () -> startGame()));
+        play.addComponent(new Clickable(play, (SpriteObject) play, () -> startMultiplayerWindow()));
         play.setPosition(1920/2 - 320, 1280/2 - 128 + 128 + 64);
         test = new Test();
         test.setPosition(100, 50);
@@ -35,13 +36,16 @@ public class Menu extends MyScene {
         // stage.addActor(test);
         time = 0;
         startGameTime = -1f;
+
+        accept = new AcceptObject();
+        stage.addActor(accept);
     }
 
-    public void startGame() {
-        startGameTime = 0;
+    public void startMultiplayerWindow() {
+        SceneManager.switchToScene(MySceneManager.multiplayerWindow);
     }
 
-    float k = 1f;
+    float k = 0.1f;
     public void act() {
         super.act();
         time += Gdx.graphics.getDeltaTime();
@@ -57,27 +61,6 @@ public class Menu extends MyScene {
             bg.alfa = 1f;
             play.alfa = 1f;
             quit.alfa = 1f;
-        }
-
-        // startGame
-        if (startGameTime >= 0) {
-            startGameTime += Gdx.graphics.getDeltaTime();
-            if (startGameTime/k < Math.PI/2) {
-                float a = (float) (1 - Math.sin(startGameTime/k));
-                bg.alfa = a*a*a*a*a*a;
-                play.alfa = a*a*a*a*a*a;
-                quit.alfa = a*a*a*a*a*a;
-            } else {
-                bg.alfa = 0f;
-                play.alfa = 0f;
-                quit.alfa = 0f;
-                MySceneManager.game = new Game();
-                SceneManager.switchToScene(MySceneManager.game);
-                AssetLoader.soundtrack_menu.stop();
-                AssetLoader.soundtrack.play();
-                AssetLoader.soundtrack.setLooping(true);
-                startGameTime = -1;
-            }
         }
     }
 }

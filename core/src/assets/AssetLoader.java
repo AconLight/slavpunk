@@ -10,7 +10,6 @@ import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.scenes.scene2d.ui.Image;
-import stefan.PlayerGenerator;
 
 import java.applet.AudioClip;
 import java.io.IOException;
@@ -73,6 +72,13 @@ public class AssetLoader {
     }
 
     public static void load() {
+        createAsset("graphics/sprites/add_player.png", "add_player");
+        createAsset("graphics/sprites/awaiting.png", "awaiting");
+        createAsset("graphics/sprites/player_joined.png", "player_joined");
+        createAsset("graphics/sprites/accept.png", "accept");
+
+
+
         createAsset("red.png", "redartedSplash");
         createAsset("graphics/sprites/menu_bg.png", "bgSplash");
         createAsset("square.png", "square");

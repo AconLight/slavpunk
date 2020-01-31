@@ -11,6 +11,8 @@ public class GameObject extends Group {
     public float index;
     public float alfa = 1f;
 
+    public String id = "-1";
+
     public ShaderProgram shader;
 
     private ArrayList<GameComponent> components;
@@ -19,13 +21,18 @@ public class GameObject extends Group {
         create(0);
     }
 
+    public GameObject(float index, String id) {
+        this.id = id;
+        create(index);
+    }
+
     public GameObject(float index) {
         create(index);
     }
 
     public void create(float index) {
         this.index = index;
-        GameObjectManager.registerCreationOfGameObject(this);
+        GameObjectManager.registerCreationOfGameObject(this, id);
         ShaderProgram shader = new ShaderProgram(Gdx.files.internal("shaders/example.vert"), Gdx.files.internal("shaders/example.frag"));
         setShader(shader);
         components = new ArrayList<>();
