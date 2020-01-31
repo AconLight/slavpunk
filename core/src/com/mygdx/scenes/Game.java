@@ -5,14 +5,15 @@ import com.mygdx.events.Event;
 import com.mygdx.gameObjects.NetSpawner;
 import com.mygdx.networking.NetworkApi;
 import com.mygdx.networking.NetworkManager;
+import lgj.spawner.MyNetSpawner;
 
 public class Game extends MyScene {
 
-    NetSpawner netSpawner;
+    MyNetSpawner netSpawner;
 
     public Game() {
         super();
-        netSpawner = new NetSpawner(stage);
+        netSpawner = new MyNetSpawner(stage);
     }
 
     int i = 0;
