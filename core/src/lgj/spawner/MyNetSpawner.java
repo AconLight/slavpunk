@@ -77,10 +77,10 @@ public class MyNetSpawner extends GameObject {
         }
 
         stage.addActor(test);
-        //stage.addActor(ship);
+        stage.addActor(ship);
         stage.addActor(elevator);
-        //stage.addActor(vacuum);
-        //stage.addActor(pipes);
+        stage.addActor(vacuum);
+        stage.addActor(pipes);
 
         Random rand = new Random();
         stage.addActor(new Enemy(true, "ddd" + NetworkApi.manager.myAddress.ip + NetworkApi.manager.myAddress.port,
