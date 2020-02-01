@@ -45,12 +45,10 @@ public class Player extends GameObject {
         head.animations.get("idle_right").setFrameDuration(10f);
         head.animations.get("idle_left").setFrameDuration(10f);
         head.chooseAnimation("idle_right");
-        head.setPosition(posX, posY);
         head.setScale(scale);
 
         body = AssetLoader.getAnimation("body", index);
         body.chooseAnimation("idle_right");
-        body.setPosition(posX, posY);
         body.setScale(scale);
 
         arm = AssetLoader.getAnimation("arm", index);
@@ -59,17 +57,14 @@ public class Player extends GameObject {
         arm.animations.get("arm_right").setFrameDuration(2f);
         arm.animations.get("arm_left").setFrameDuration(2f);
         arm.chooseAnimation("idle_right");
-        arm.setPosition(posX, posY);
         arm.setScale(scale);
 
         hamer = AssetLoader.getAnimation("hamer", index);
         hamer.chooseAnimation("idle_right");
-        hamer.setPosition(posX, posY);
         hamer.setScale(scale);
 
         legs = AssetLoader.getAnimation("legs", index);
         legs.chooseAnimation("idle_right");
-        legs.setPosition(posX, posY);
         legs.setScale(scale);
     }
 
