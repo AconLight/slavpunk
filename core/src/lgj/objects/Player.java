@@ -7,6 +7,7 @@ import boost.SpriteObject;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
 import com.badlogic.gdx.graphics.Camera;
+import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.mygdx.events.Event;
@@ -31,6 +32,8 @@ public class Player extends GameObject {
     Vector2 camOffset;
     Vector2 camConstOffset;
     Vector2 camDirection;
+    float camZoom;
+    float camDirectionZoom;
 
     public Player(Stage stage, boolean isMine, String id) {
         super(2, id);
@@ -39,6 +42,8 @@ public class Player extends GameObject {
         camOffset = new Vector2();
         camConstOffset = new Vector2(100, 120);
         camDirection = new Vector2();
+        camZoom = 2;
+        camDirectionZoom = 2;
 
         cam = stage.getCamera();
 
@@ -280,8 +285,16 @@ public class Player extends GameObject {
             if (!prevStrike.equals(isStrike) || !prevRight.equals(isRight) || !prevState.equals(state))
                 sendAnimationUpdate(isStrike);
 
+            if (isInCannon) {
+                camDirection.set(1000, 0);
+                camDirectionZoom = 3f;
+            } else {
+                camDirectionZoom = 2f;
+            }
+            camZoom = (camZoom + camDirectionZoom*delta)/(1+delta);
             camOffset = camOffset.set((camDirection.x * delta + camOffset.x) / (1+delta), (camDirection.y * delta + camOffset.y) / (1+delta));
             cam.translate(-cam.position.x + posX + camOffset.x + camConstOffset.x, -cam.position.y + posY + camOffset.y + camConstOffset.y, 0);
+            ((OrthographicCamera) cam).zoom = camZoom;
             cam.update();
         }
     }

@@ -15,7 +15,6 @@ public class Game extends MyScene {
     public Game() {
         super();
         netSpawner = new MyNetSpawner(stage);
-        ((OrthographicCamera)stage.getCamera()).zoom = 4;
     }
 
     int i = 0;
