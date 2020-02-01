@@ -16,13 +16,17 @@ public class Player extends GameObject {
     float posX, posY, scale, velocity;
     String state, isRight;
     String isStrike = "not";
+    float gravity = 0;
 
-    public Player(boolean isMine,String id){
+    final int elevatorLeft = 415;
+    final int elevatorRight = 560;
+
+    public Player(boolean isMine, String id) {
         super(2, id);
         this.isMine = isMine;
 
-        posX = 200;
-        posY = 260;
+        posX = 300;
+        posY = 485;
         scale = 4;
         velocity = 5;
         isRight = "right";
@@ -36,9 +40,7 @@ public class Player extends GameObject {
         addActor(legs);
     }
 
-    void animationInit(){
-        posX = 0;
-        posY = 485;
+    void animationInit() {
         head = AssetLoader.getAnimation("head", index);
         head.animations.get("head_right").setFrameDuration(10f);
         head.animations.get("head_left").setFrameDuration(10f);
@@ -75,21 +77,22 @@ public class Player extends GameObject {
      * arm - zwykla reka
      * hamer - reka z młotkiem
      * dupa - na tinderze
+     *
      * @param state
      */
-    public void changeAnimation(String state, String isRight, String isStrike){
+    public void changeAnimation(String state, String isRight, String isStrike) {
 
-        switch (state){             //if w switchu nice mmmmm
-            case "idle":{
+        switch (state) {             //if w switchu nice mmmmm
+            case "idle": {
 
-                    head.chooseAnimation( "idle_" + isRight);
-                    arm.chooseAnimation("idle_" + isRight);
-                    hamer.chooseAnimation("idle_" + isRight);
-                    body.chooseAnimation("idle_" + isRight);
-                    legs.chooseAnimation("idle_" + isRight);
-                    break;
+                head.chooseAnimation("idle_" + isRight);
+                arm.chooseAnimation("idle_" + isRight);
+                hamer.chooseAnimation("idle_" + isRight);
+                body.chooseAnimation("idle_" + isRight);
+                legs.chooseAnimation("idle_" + isRight);
+                break;
             }
-            default:{
+            default: {
                 head.chooseAnimation("head_" + state);
                 arm.chooseAnimation("arm_" + state);
                 hamer.chooseAnimation("hamer_" + state);
@@ -103,9 +106,6 @@ public class Player extends GameObject {
         } else {
             stopStriking(isRight);
         }
-
-
-        Gdx.app.log("posy", Float.toString(posY));
     }
 
     public void startStriking(String isRight) {
@@ -125,6 +125,8 @@ public class Player extends GameObject {
         prevState = state;
         prevStrike = isStrike;
 
+        boolean isInElevator = (posX >= elevatorLeft && posX <= elevatorRight);
+
         if (isMine) {
 
             if (Gdx.input.isKeyPressed(Input.Keys.F)) {
@@ -134,29 +136,57 @@ public class Player extends GameObject {
             }
 
             if (Gdx.input.isKeyPressed(Input.Keys.UP)) {
-                posY += velocity;
+                if (isInElevator) {
+                    posY += velocity;
+                } else if (posY == 485 || posY == 790) {
+                    gravity -= 10;
+                }
+                //posY += velocity;
                 //state = "up";
-            } else
+            }
             if (Gdx.input.isKeyPressed(Input.Keys.DOWN)) {
                 posY -= velocity;
                 //state = "down";
-            } else
+            }
             if (Gdx.input.isKeyPressed(Input.Keys.RIGHT)) {
                 posX += velocity;
                 isRight = "right";
                 state = "right";
-            } else
+            }
             if (Gdx.input.isKeyPressed(Input.Keys.LEFT)) {
                 posX -= velocity;
                 isRight = "left";
                 state = "left";
-            } else {
-                state = "idle";
             }
-
+            //TODO wojtaaas
+//            else {
+//                state = "idle";
+//            }
         }
 
-       // isInMovement = false;
+
+        if (!isInElevator)  {
+            gravity += 1;
+            posY -= gravity;
+        }
+
+
+        if (posY < 485) {
+            posY = 485;
+            gravity = 0;
+        } else if (!isInElevator) {
+            if (posY >= 720 && posY < 790) {
+                posY = 790;
+                gravity = 0;
+            }
+        }
+        if (posX < 270) {
+            posX = 270;
+        }
+
+        Gdx.app.log("posx", Float.toString(posX));
+
+        // isInMovement = false;
 
         updatePos();
 
@@ -171,7 +201,7 @@ public class Player extends GameObject {
     public void updatePos() {
         float x = getX();
         float y = getY();
-        setPosition((posX + x)/2, (posY + y)/2);
+        setPosition((posX + x) / 2, (posY + y) / 2);
     }
 
     private float lastSendX = posX;
@@ -180,14 +210,14 @@ public class Player extends GameObject {
     public void sendPos() {
         float dx = posX - lastSendX;
         float dy = posY - lastSendY;
-        if (dy*dy + dx*dx > 100) {
+        if (dy * dy + dx * dx > 100) {
             lastSendX = posX;
             lastSendY = posY;
             NetworkManager.networkManager.addEventToSend(new Event(id + " updatePos float " + posX + " float " + posY));
         }
     }
 
-    void sendAnimationUpdate(String isStrike){
+    void sendAnimationUpdate(String isStrike) {
         Gdx.app.log("Player", "sendAnimationUpdate");
         NetworkManager.networkManager.addEventToSend(new Event(id + " changeAnimation String " + state + " String " + isRight + " String " + isStrike));
     }
