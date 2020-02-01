@@ -39,31 +39,40 @@ public class Player extends GameObject {
         posX = 0;
         posY = 0;
         head = AssetLoader.getAnimation("head");
-        head.chooseAnimation("idleR");
+        head.chooseAnimation("idle_right");
         head.setPosition(posX, posY);
         head.setScale(scale);
 
         body = AssetLoader.getAnimation("body");
-        body.chooseAnimation("idleR");
+        body.chooseAnimation("idle_right");
         body.setPosition(posX, posY);
         body.setScale(scale);
 
         arm = AssetLoader.getAnimation("arm");
-        arm.chooseAnimation("idleR");
+        arm.chooseAnimation("idle_right");
         arm.setPosition(posX, posY);
         arm.setScale(scale);
 
-        hamer = AssetLoader.getAnimation("arm");
-        hamer.chooseAnimation("idleR");
+        hamer = AssetLoader.getAnimation("hamer");
+        hamer.chooseAnimation("idle_right");
         hamer.setPosition(posX, posY);
         hamer.setScale(scale);
 
         legs = AssetLoader.getAnimation("legs");
-        legs.chooseAnimation("idleR");
+        legs.chooseAnimation("idle_right");
         legs.setPosition(posX, posY);
         legs.setScale(scale);
     }
 
+    /**
+     * zeby to dzialao, to nazwy folderków muszą być w konwencji:
+     * arm_right -> bieganie w prawo ręka bez młotka;
+     * idle_left -> stanie w lewo
+     * arm - zwykla reka
+     * hamer - reka z młotkiem
+     * dupa - na tinderze
+     * @param state
+     */
     void changeAnimation(String state){
 
         head.chooseAnimation(head + "_" + state);
