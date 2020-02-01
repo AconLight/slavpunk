@@ -38,7 +38,7 @@ public class Player extends GameObject {
 
     void animationInit(){
         posX = 0;
-        posY = 0;
+        posY = 485;
         head = AssetLoader.getAnimation("head", index);
         head.animations.get("head_right").setFrameDuration(10f);
         head.animations.get("head_left").setFrameDuration(10f);
@@ -110,7 +110,7 @@ public class Player extends GameObject {
         }
 
 
-
+        Gdx.app.log("posy", Float.toString(posY));
     }
 
     public void startStriking(String isRight) {

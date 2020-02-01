@@ -19,7 +19,6 @@ public class GameObjectRenderer {
 
         for (float index: idxs) {
             GameObjectManager.currentIndex = index;
-            Gdx.app.log("GameObjectRenderer", "index: " + index);
             stage.draw();
         }
     }
