@@ -4,14 +4,14 @@ import assets.AssetLoader;
 import boost.GameObject;
 import boost.SpriteObject;
 
-public class Ship extends GameObject {
+public class Elevator extends GameObject {
 
     SpriteObject ship;
     boolean isMine;
     float posX, posY, scale;
 
-    public Ship(boolean isMine, String id) {
-        super(1, id);
+    public Elevator(boolean isMine, String id) {
+        super(3, id);
         this.isMine = isMine;
 
         posX = 200;
@@ -25,7 +25,7 @@ public class Ship extends GameObject {
     void spriteInit() {
         posX = 0;
         posY = 0;
-        ship = AssetLoader.getAsset("ship", index);
+        ship = AssetLoader.getAsset("elevator", index);
         ship.scaleBy(scale);
     }
 

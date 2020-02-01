@@ -38,7 +38,7 @@ public class AssetLoader {
 
     public static SpriteObject getAnimation(String name, float index) {
         SpriteObject gameObject = new SpriteObject(index);
-        for (String key: animations.get(name).keySet()) {
+        for (String key : animations.get(name).keySet()) {
             TextureRegion tex = animations.get(name).get(key).getKeyFrames()[0];
             gameObject.setBounds(0, 0, tex.getRegionWidth(), tex.getRegionHeight());
             break;
@@ -49,7 +49,7 @@ public class AssetLoader {
 
     public static SpriteObject getAnimation(String name) {
         SpriteObject gameObject = new SpriteObject();
-        for (String key: animations.get(name).keySet()) {
+        for (String key : animations.get(name).keySet()) {
             TextureRegion tex = animations.get(name).get(key).getKeyFrames()[0];
             gameObject.setBounds(0, 0, tex.getRegionWidth(), tex.getRegionHeight());
             break;
@@ -78,7 +78,6 @@ public class AssetLoader {
         createAsset("graphics/sprites/accept.png", "accept");
 
 
-
         createAsset("red.png", "redartedSplash");
         createAsset("graphics/sprites/menu_bg.png", "bgSplash");
         createAsset("square.png", "square");
@@ -99,6 +98,9 @@ public class AssetLoader {
         createAsset("graphics/sprites/light.png", "light");
         createAsset("graphics/sprites/howto.png", "howto");
         createAsset("graphics/sprites/ship.png", "ship");
+        createAsset("graphics/sprites/elevator.png", "elevator");
+        createAsset("graphics/sprites/vacuum.png", "vacuum");
+
         loadAnimations();
 
         soundtrack = Gdx.audio.newMusic(Gdx.files.internal("sounds/soundtrack.wav"));
@@ -113,18 +115,17 @@ public class AssetLoader {
     }
 
 
-
     public static void createAnimation(String path, String name) {
         HashMap<String, Animation<TextureRegion>> myAnimations = new HashMap<>();
 
         List<String> dirs = getDirs("graphics/animations/" + path);
         Gdx.app.log("dupa", "dupa");
-        for (String child: dirs) {
+        for (String child : dirs) {
             Gdx.app.log("AssetLoader", child);
             List<String> dirs2 = getFiles(child);
             TextureRegion[] textures = new TextureRegion[dirs2.size()];
             int i = 0;
-            for (String childTexture: dirs2) {
+            for (String childTexture : dirs2) {
                 Gdx.app.log("AssetLoader ------  ", childTexture);
                 textures[i] = new TextureRegion(new Texture(childTexture));
                 i++;
@@ -133,7 +134,7 @@ public class AssetLoader {
             animation.setPlayMode(Animation.PlayMode.LOOP);
             String[] parts = child.split("/");
 
-            myAnimations.put(parts[parts.length-1], animation);
+            myAnimations.put(parts[parts.length - 1], animation);
         }
 
         animations.put(name, myAnimations);

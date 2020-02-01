@@ -23,7 +23,7 @@ public class Player extends GameObject {
 
         posX = 200;
         posY = 260;
-        scale = 10;
+        scale = 4;
         velocity = 5;
         isRight = "right";
         state = "idle";
