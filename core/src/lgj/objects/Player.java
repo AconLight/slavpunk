@@ -5,6 +5,7 @@ import boost.GameObject;
 import boost.SpriteObject;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
+import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.mygdx.events.Event;
 import com.mygdx.networking.NetworkManager;
 
@@ -21,7 +22,7 @@ public class Player extends GameObject {
     final int elevatorLeft = 415;
     final int elevatorRight = 560;
 
-    public Player(boolean isMine, String id) {
+    public Player(Stage stage, boolean isMine, String id) {
         super(2, id);
         this.isMine = isMine;
 

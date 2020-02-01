@@ -27,7 +27,7 @@ public class MyNetSpawner extends GameObject {
     }
 
     public void spawn(String id) {
-        test = new Player(false, id);
+        test = new Player(stage, false, id);
         stage.addActor(test);
     }
 
@@ -66,7 +66,7 @@ public class MyNetSpawner extends GameObject {
     }
 
     public void spawnAsMine() {
-        test = new Player(true, "player" + NetworkApi.manager.myAddress.ip + NetworkApi.manager.myAddress.port);
+        test = new Player(stage,true, "player" + NetworkApi.manager.myAddress.ip + NetworkApi.manager.myAddress.port);
         ship = new Ship(true, "ship" + NetworkApi.manager.myAddress.ip + NetworkApi.manager.myAddress.port);
         elevator = new Elevator(true, "elevator" + NetworkApi.manager.myAddress.ip + NetworkApi.manager.myAddress.port);
         vacuum = new Vacuum(true, "vacuum" + NetworkApi.manager.myAddress.ip + NetworkApi.manager.myAddress.port);
