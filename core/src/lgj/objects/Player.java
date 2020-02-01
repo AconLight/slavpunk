@@ -2,6 +2,7 @@ package lgj.objects;
 
 import assets.AssetLoader;
 import boost.GameObject;
+import boost.GameObjectManager;
 import boost.SpriteObject;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
@@ -20,6 +21,7 @@ public class Player extends GameObject {
     String state, isRight;
     String isStrike = "not";
     float gravity = 0;
+    boolean isInCannon = false;
 
     final int elevatorLeft = 415;
     final int elevatorRight = 560;
@@ -151,22 +153,24 @@ public class Player extends GameObject {
             }
 
             Boolean isPresedWSAD = false;
-            if (Gdx.input.isKeyPressed(Input.Keys.UP)) {
-                if (isInElevator) {
-                    posY += velocity;
-                } else if (posY == 485 || posY == 790 || posY == 1097) {
-                    gravity -= 10;
+            if (!isInCannon) {
+                if (Gdx.input.isKeyPressed(Input.Keys.UP)) {
+                    if (isInElevator) {
+                        posY += velocity;
+                    } else if (posY == 485 || posY == 790 || posY == 1097) {
+                        gravity -= 10;
+                    }
+                    //posY += velocity;
+                    //state = "up";
+                    isPresedWSAD = true;
+                    camDirection.set(camDirection.x, +200);
                 }
-                //posY += velocity;
-                //state = "up";
-                isPresedWSAD = true;
-                camDirection.set(camDirection.x, +200);
-            }
-            if (Gdx.input.isKeyPressed(Input.Keys.DOWN)) {
-                posY -= velocity;
-                //state = "down";
-                isPresedWSAD = true;
-                camDirection.set(camDirection.x, -200);
+                if (Gdx.input.isKeyPressed(Input.Keys.DOWN)) {
+                    posY -= velocity;
+                    //state = "down";
+                    isPresedWSAD = true;
+                    camDirection.set(camDirection.x, -200);
+                }
             }
             if (Gdx.input.isKeyPressed(Input.Keys.RIGHT)) {
                 posX += velocity;
@@ -220,24 +224,53 @@ public class Player extends GameObject {
         if (posY < 720) { // First floor
             if (posX < 270) {
                 posX = 270;
-            } else if (posX > 1555) posX = 1555;
+            } else if (posX >= 1555) {
+                posX = 1555;
+                if(!isInCannon) {
+                    ((CannonBase) GameObjectManager.gameObjects.get("cannonBase1")).use(id);
+                    isInCannon = true;
+                }
+            } else {
+                if(isInCannon) {
+                    ((CannonBase) GameObjectManager.gameObjects.get("cannonBase1")).leave(id);
+                    isInCannon = false;
+                }
+            }
         } else if (posY < 1090) { // Second floor
             if (posX < 315) {
                 posX = 315;
             } else {
-                if (posX > 1635) posX = 1635;
+                if (posX >= 1635) {
+                    posX = 1635;
+                    if(!isInCannon) {
+                        ((CannonBase) GameObjectManager.gameObjects.get("cannonBase2")).use(id);
+                        isInCannon = true;
+                    }
+                } else {
+                    if(isInCannon) {
+                        ((CannonBase) GameObjectManager.gameObjects.get("cannonBase2")).leave(id);
+                        isInCannon = false;
+                    }
+                }
             }
         } else { // Third floor
             if (posX < 300) {
                 posX = 300;
             } else {
-                if (posX > 1710) posX = 1710;
+                if (posX >= 1710){
+                    posX = 1710;
+                    if(!isInCannon) {
+                        ((CannonBase) GameObjectManager.gameObjects.get("cannonBase3")).use(id);
+                        isInCannon = true;
+                    }
+                } else {
+                    if(isInCannon) {
+                        ((CannonBase) GameObjectManager.gameObjects.get("cannonBase3")).leave(id);
+                        isInCannon = false;
+                    }
+                }
             }
         }
-
-        // isInMovement = false;
-        Gdx.app.log("x", Float.toString(posX));
-
 
         updatePos();
 
