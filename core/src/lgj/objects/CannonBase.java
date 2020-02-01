@@ -45,7 +45,6 @@ public class CannonBase extends GameObject {
                 if(cannon.getRotation() >= -69) cannon.rotateBy(-0.5f);
             }
         }
-        Gdx.app.log("rotation", Float.toString(cannon.getRotation()));
         //updatePos();
     }
 
