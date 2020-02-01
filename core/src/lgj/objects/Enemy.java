@@ -34,10 +34,10 @@ public class Enemy extends GameObject {
         this.legs = legs;
         this.legs_color = legs_color;
 
-        posX = 800;
-        posY = 260;
+        posX = 250;
+        posY = 250;
         scale = 10;
-        velocity = 5;
+        velocity = 0;
 
         colorInit();
         animationInit();
@@ -48,64 +48,58 @@ public class Enemy extends GameObject {
     void colorInit(){
         colory = new HashMap<>();
         int id = 0;
-        pink = new Color(255, 0, 102, 255);
-        colory.put(id++,pink);
-        green = new Color(102, 255, 102, 255);
-        colory.put(id++,green);
-        blue = new Color(0, 255, 255,255);
-        colory.put(id++,blue);
-        yellow = new Color(255, 204, 0,255);
-        colory.put(id++,yellow);
+        pink = new Color(255/255f, 0/255f, 102/255f, 255/255f);
+        colory.put(++id,pink);
+        green = new Color(102/255f, 255/255f, 102/255f, 255/255f);
+        colory.put(++id,green);
+        blue = new Color(0/255f, 255/255f, 255/255f,255/255f);
+        colory.put(++id,blue);
+        yellow = new Color(255/255f, 204/255f, 0/255f,255/255f);
+        colory.put(++id,yellow);
     }
 
     void animationInit(){
-        posX = 0;
-        posY = 0;
 
-        head_ = AssetLoader.getAnimation("enemy_head");
-        head_.chooseAnimation(Integer.toString(head));
-        head_.setPosition(posX, posY);
-        head_.setScale(scale);
-        addActor(head_);
 
-        body_ = AssetLoader.getAnimation("enemy_body");
+
+        legs_ = AssetLoader.getAnimation("enemy_legs", 2);
+        legs_.chooseAnimation(Integer.toString(legs));
+        legs_.setScale(scale);
+        addActor(legs_);
+
+        body_ = AssetLoader.getAnimation("enemy_body", 2);
         body_.chooseAnimation(Integer.toString(body));
-        body_.setPosition(posX, posY);
         body_.setScale(scale);
         addActor(body_);
 
-        renka_ = AssetLoader.getAnimation("enemy_renka");
-        renka_.chooseAnimation(Integer.toString(renka));
-        renka_.setPosition(posX, posY);
-        renka_.setScale(scale);
-        addActor(renka_);
+        head_ = AssetLoader.getAnimation("enemy_head", 2);
+        head_.chooseAnimation(Integer.toString(head));
+        head_.setScale(scale);
+        addActor(head_);
 
-        weapon_ = AssetLoader.getAnimation("enemy_weapon");
+        weapon_ = AssetLoader.getAnimation("enemy_weapon", 2);
         weapon_.chooseAnimation(Integer.toString(weapon));
-        weapon_.setPosition(posX, posY);
         weapon_.setScale(scale);
         addActor(weapon_);
 
-        eye_ = AssetLoader.getAnimation("enemy_eye");
+        renka_ = AssetLoader.getAnimation("enemy_renka", 2);
+        renka_.chooseAnimation(Integer.toString(renka));
+        renka_.setScale(scale);
+        addActor(renka_);
+
+        eye_ = AssetLoader.getAnimation("enemy_eye", 2);
         eye_.chooseAnimation(Integer.toString(eye));
-        eye_.setPosition(posX, posY);
         eye_.setScale(scale);
         addActor(eye_);
-
-        legs_ = AssetLoader.getAnimation("enemy_legs");
-        legs_.chooseAnimation(Integer.toString(legs));
-        legs_.setPosition(posX, posY);
-        legs_.setScale(scale);
-        addActor(legs_);
 
     }
 
 
 
     void changeColor(){
-        eye_.setColor(colory.get(eye_color));
-        weapon_.setColor(colory.get(weapon_color));
-        legs_.setColor(colory.get(legs_color));
+        eye_.color = (colory.get(eye_color));
+        weapon_.color = (colory.get(weapon_color));
+        legs_.color = (colory.get(legs_color));
 
     }
 
@@ -114,7 +108,7 @@ public class Enemy extends GameObject {
 
 
         if (isMine) {
-                posX -= velocity;
+                //posX -= velocity;
         }
 
         updatePos();
@@ -127,11 +121,13 @@ public class Enemy extends GameObject {
     public void updatePos() {
         float x = getX();
         float y = getY();
+        Gdx.app.log("Enemy", "x: " + getX());
+        Gdx.app.log("Enemy", "y: " + getY());
         setPosition((posX + x)/2, (posY + y)/2);
     }
 
     public void sendPos() {
-        NetworkManager.networkManager.addEventToSend(new Event(id + " updatePos float " + posX + " float " + posY));
+        // NetworkManager.networkManager.addEventToSend(new Event(id + " updatePos float " + posX + " float " + posY));
     }
 
     public void updatePos(Float posX2, Float posY2) {

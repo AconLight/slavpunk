@@ -27,17 +27,5 @@ public class NetSpawner extends GameObject {
     public void spawnAsMine() {
         test = new NetTest(true, "player" + NetworkApi.manager.myAddress.ip + NetworkApi.manager.myAddress.port);
         stage.addActor(test);
-        Random rand = new Random();
-        stage.addActor(new Enemy(true, "ddd" + NetworkApi.manager.myAddress.ip + NetworkApi.manager.myAddress.port,
-                rand.nextInt(3),
-                rand.nextInt(3),
-                rand.nextInt(3),
-                rand.nextInt(3),
-                rand.nextInt(4),
-                rand.nextInt(3),
-                rand.nextInt(4),
-                rand.nextInt(3),
-                rand.nextInt(4)
-        ));
     }
 }
