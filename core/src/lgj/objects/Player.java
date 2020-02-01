@@ -128,6 +128,7 @@ public class Player extends GameObject {
 
         prevRight = isRight;
         prevState = state;
+        prevStrike = isStrike;
 
         if (isMine) {
 
@@ -167,7 +168,7 @@ public class Player extends GameObject {
         if (isMine) {
             sendPos();
             changeAnimation(state, isRight, isStrike);
-            if (prevStrike != isStrike || prevRight != isRight || prevState != state)
+            if (!prevStrike.equals(isStrike) || !prevRight.equals(isRight) || !prevState.equals(state))
                 sendAnimationUpdate(isStrike);
         }
     }
@@ -192,6 +193,7 @@ public class Player extends GameObject {
     }
 
     void sendAnimationUpdate(String isStrike){
+        Gdx.app.log("Player", "sendAnimationUpdate");
         NetworkManager.networkManager.addEventToSend(new Event(id + " changeAnimation String " + state + " String " + isRight + " String " + isStrike));
     }
 

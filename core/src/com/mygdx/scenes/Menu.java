@@ -8,6 +8,7 @@ import boost.SpriteObject;
 import com.badlogic.gdx.Gdx;
 import com.mygdx.gameComponents.Clickable;
 import com.mygdx.gameObjects.Test;
+import com.mygdx.networking.NetworkManager;
 import lobby.AcceptObject;
 
 public class Menu extends MyScene {
@@ -23,7 +24,7 @@ public class Menu extends MyScene {
         quit.addComponent(new Clickable(quit, (SpriteObject) quit, () -> Gdx.app.exit()));
         quit.setPosition(1920/2 - 320, 1280/2 - 128 - 128 - 64);
         play = AssetLoader.getAsset("play");
-        play.addComponent(new Clickable(play, (SpriteObject) play, () -> startMultiplayerWindow()));
+        play.addComponent(new Clickable(play, (SpriteObject) play, () -> startMultiplayerWindowAsHost()));
         play.setPosition(1920/2 - 320, 1280/2 - 128 + 128 + 64);
         test = new Test();
         test.setPosition(100, 50);
@@ -43,6 +44,11 @@ public class Menu extends MyScene {
 
     public void startMultiplayerWindow() {
         SceneManager.switchToScene(MySceneManager.multiplayerWindow);
+    }
+
+    public void startMultiplayerWindowAsHost() {
+        SceneManager.switchToScene(MySceneManager.multiplayerWindow);
+        NetworkManager.networkManager.isHost = true;
     }
 
     float k = 0.1f;
