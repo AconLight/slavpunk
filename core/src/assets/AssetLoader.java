@@ -156,6 +156,14 @@ public class AssetLoader {
         createAnimation("body", "body");
         createAnimation("legs", "legs");
         createAnimation("hamer", "hamer");
+
+        createAnimation("enemy_head", "enemy_head");
+        createAnimation("enemy_body", "enemy_body");
+        createAnimation("enemy_legs", "enemy_legs");
+        createAnimation("enemy_eye", "enemy_eye");
+        createAnimation("enemy_renka", "enemy_renka");
+        createAnimation("enemy_weapon", "enemy_weapon");
+        
     }
 
 
