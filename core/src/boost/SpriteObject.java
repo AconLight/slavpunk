@@ -42,7 +42,7 @@ public class SpriteObject extends GameObject {
     @Override
     public void act(float delta) {
         super.act(delta);
-        time += delta;
+        time += delta*20;
     }
 
 

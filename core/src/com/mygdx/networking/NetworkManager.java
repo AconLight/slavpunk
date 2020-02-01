@@ -1,5 +1,6 @@
 package com.mygdx.networking;
 
+import com.badlogic.gdx.Gdx;
 import com.mygdx.events.Event;
 import com.mygdx.events.EventHandler;
 import com.mygdx.events.EventParser;
@@ -12,7 +13,7 @@ import java.util.ArrayList;
  */
 public class NetworkManager {
     ArrayList<Address> toAddresses;
-    boolean isHost;
+    public boolean isHost;
     EventsHolder eventsHolder;
     EventHandler eventHandler;
 
@@ -42,7 +43,14 @@ public class NetworkManager {
     }
 
     public void createEventsToHandle(String data) {
-        eventsHolder.addEventsToHandle(EventParser.createEvents(data));
+        ArrayList<Event> events = EventParser.createEvents(data);
+        eventsHolder.addEventsToHandle(events);
+        Gdx.app.log("NetworkManager", "isHost: " + isHost);
+        if (isHost) {
+            for (Event e: events) {
+                addEventToSend(e);
+            }
+        }
     }
 
     public void addEventToSend(Event event) {
@@ -53,7 +61,8 @@ public class NetworkManager {
         ArrayList<Event> events = eventsHolder.popEventsToSend();
         if (events.size() > 0) {
             for (Address a : toAddresses) {
-                NetworkApi.manager.send(a.ip, a.port, EventParser.createMessage(events));
+                String to = a.port + ":" + a.ip;
+                NetworkApi.manager.send(a.ip, a.port, EventParser.createMessage(events, to));
             }
         }
     }
