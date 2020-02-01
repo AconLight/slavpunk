@@ -102,6 +102,7 @@ public class AssetLoader {
         createAsset("graphics/sprites/vacuum.png", "vacuum");
         createAsset("graphics/sprites/pipes.png", "pipes");
         createAsset("graphics/sprites/stock.png", "cannonBase");
+        createAsset("graphics/sprites/cannon.png", "cannon");
 
         loadAnimations();
 
