@@ -217,21 +217,26 @@ public class Player extends GameObject {
         }
 
         // Horizontal borders
-        if (posY < 720) {
+        if (posY < 720) { // First floor
             if (posX < 270) {
                 posX = 270;
             } else if (posX > 1555) posX = 1555;
-        } else {
+        } else if (posY < 1090) { // Second floor
             if (posX < 315) {
                 posX = 315;
             } else {
                 if (posX > 1635) posX = 1635;
-
+            }
+        } else { // Third floor
+            if (posX < 300) {
+                posX = 300;
+            } else {
+                if (posX > 1710) posX = 1710;
             }
         }
 
         // isInMovement = false;
-        Gdx.app.log("y", Float.toString(posY));
+        Gdx.app.log("x", Float.toString(posX));
 
 
         updatePos();
