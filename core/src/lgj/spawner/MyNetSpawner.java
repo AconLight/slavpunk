@@ -2,6 +2,7 @@ package lgj.spawner;
 
 import boost.GameObject;
 import com.badlogic.gdx.scenes.scene2d.Stage;
+import com.mygdx.events.Event;
 import com.mygdx.networking.NetworkApi;
 import com.mygdx.networking.NetworkManager;
 import lgj.objects.*;
@@ -65,6 +66,36 @@ public class MyNetSpawner extends GameObject {
         }
     }
 
+    Random rand = new Random();
+    int enemyNumb = 0;
+
+    public void spawnMinionEveryWhere(int a) {
+        int head = rand.nextInt(3) + 1;
+        int renka = rand.nextInt(3) + 1;
+        int body = rand.nextInt(3) + 1;
+        int weapon = rand.nextInt(3) + 1;
+        int weapon_color = rand.nextInt(4) + 1;
+        int eye = rand.nextInt(3) + 1;
+        int eye_color = rand.nextInt(4) + 1;
+        int legs = rand.nextInt(3) + 1;
+        int legs_color = rand.nextInt(4) + 1;
+
+        int x = 4000 + a * 400 + rand.nextInt(300);
+        spawnNextWave(x,
+                head, renka, body, weapon, weapon_color, eye, eye_color, legs, legs_color
+        );
+        NetworkManager.networkManager.addEventToSend(new Event("spawner spawnNextWave int " + x + " int " +
+                head + " int " + renka + " int " + body + " int " + weapon + " int " + weapon_color + " int " + eye + " int " + eye_color + " int " + legs + " int " + legs_color
+        ));
+    }
+
+    public void spawnNextWave(Integer x,  Integer head, Integer renka, Integer body, Integer weapon, Integer weapon_color, Integer eye, Integer eye_color, Integer legs, Integer legs_color ) {
+
+        stage.addActor(new Enemy(x, 200, true, "enemy" + enemyNumb,
+            head, renka, body, weapon, weapon_color, eye, eye_color, legs, legs_color
+        ));
+    }
+
     public void spawnAsMine() {
         test = new Player(stage,true, "player" + NetworkApi.manager.myAddress.ip + NetworkApi.manager.myAddress.port);
         ship = new Ship(true, "ship" + NetworkApi.manager.myAddress.ip + NetworkApi.manager.myAddress.port);
@@ -72,27 +103,10 @@ public class MyNetSpawner extends GameObject {
         vacuum = new Vacuum(true, "vacuum" + NetworkApi.manager.myAddress.ip + NetworkApi.manager.myAddress.port);
         pipes = new Pipes(true, "pipes" + NetworkApi.manager.myAddress.ip + NetworkApi.manager.myAddress.port);
 
-        if(NetworkManager.networkManager.isHost) {
-
-        }
-
         stage.addActor(test);
         stage.addActor(ship);
         stage.addActor(elevator);
         stage.addActor(vacuum);
         stage.addActor(pipes);
-
-        Random rand = new Random();
-        stage.addActor(new Enemy(true, "ddd" + NetworkApi.manager.myAddress.ip + NetworkApi.manager.myAddress.port,
-                rand.nextInt(3)+1,
-                rand.nextInt(3)+1,
-                rand.nextInt(3)+1,
-                rand.nextInt(3)+1,
-                rand.nextInt(4)+1,
-                rand.nextInt(3)+1,
-                rand.nextInt(4)+1,
-                rand.nextInt(3)+1,
-                rand.nextInt(4)+1
-        ));
     }
 }

@@ -1,6 +1,7 @@
 package com.mygdx.scenes;
 
 import boost.MyScene;
+import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.mygdx.events.Event;
 import com.mygdx.gameObjects.NetSpawner;
 import com.mygdx.networking.NetworkApi;
@@ -14,6 +15,7 @@ public class Game extends MyScene {
     public Game() {
         super();
         netSpawner = new MyNetSpawner(stage);
+        ((OrthographicCamera)stage.getCamera()).zoom = 4;
     }
 
     int i = 0;
@@ -34,6 +36,12 @@ public class Game extends MyScene {
         super.act();
         if (i == 0) {
             spawn();
+        }
+
+        if (i%4000 < 15*5 && i%5 == 0) {
+            if(NetworkManager.networkManager.isHost) {
+                netSpawner.spawnMinionEveryWhere(i % 4000 / 5);
+            }
         }
         i++;
     }

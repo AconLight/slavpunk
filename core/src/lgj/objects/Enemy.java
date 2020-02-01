@@ -11,6 +11,7 @@ import com.mygdx.networking.NetworkManager;
 
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Random;
 
 public class Enemy extends GameObject {
 
@@ -20,9 +21,10 @@ public class Enemy extends GameObject {
     int head, renka, body, weapon, weapon_color, eye, eye_color, legs, legs_color;
     Color pink, green, blue, yellow;
     Map<Integer,Color> colory;
+    Random rand = new Random();
 
-    public Enemy(boolean isMine,String id, int head, int renka, int body, int weapon, int weapon_color, int eye, int eye_color, int legs, int legs_color){
-        super(0, id);
+    public Enemy(float x, float y, boolean isMine,String id, int head, int renka, int body, int weapon, int weapon_color, int eye, int eye_color, int legs, int legs_color){
+        super(2, id);
         this.isMine = isMine;
         this.head = head;
         this.renka = renka;
@@ -34,10 +36,11 @@ public class Enemy extends GameObject {
         this.legs = legs;
         this.legs_color = legs_color;
 
-        posX = 250;
-        posY = 250;
-        scale = 10;
-        velocity = 0;
+        posX = x;
+        posY = y;
+        setPosition(x, y);
+        scale = 4 + rand.nextFloat()*2;
+        velocity = 3;
 
         colorInit();
         animationInit();
@@ -108,7 +111,7 @@ public class Enemy extends GameObject {
 
 
         if (isMine) {
-                //posX -= velocity;
+            posX -= velocity;
         }
 
         updatePos();
