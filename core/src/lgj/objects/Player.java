@@ -18,6 +18,9 @@ public class Player extends GameObject {
     String isStrike = "not";
     float gravity = 0;
 
+    final int elevatorLeft = 415;
+    final int elevatorRight = 560;
+
     public Player(boolean isMine, String id) {
         super(2, id);
         this.isMine = isMine;
@@ -122,6 +125,8 @@ public class Player extends GameObject {
         prevState = state;
         prevStrike = isStrike;
 
+        boolean isInElevator = (posX >= elevatorLeft && posX <= elevatorRight);
+
         if (isMine) {
 
             if (Gdx.input.isKeyPressed(Input.Keys.F)) {
@@ -131,7 +136,9 @@ public class Player extends GameObject {
             }
 
             if (Gdx.input.isKeyPressed(Input.Keys.UP)) {
-                if (posY == 485 || posY == 790) {
+                if (isInElevator) {
+                    posY += velocity;
+                } else if (posY == 485 || posY == 790) {
                     gravity -= 10;
                 }
                 //posY += velocity;
@@ -157,19 +164,27 @@ public class Player extends GameObject {
 //            }
         }
 
-        gravity += 1;
-        posY -= gravity;
+
+        if (!isInElevator)  {
+            gravity += 1;
+            posY -= gravity;
+        }
+
+
         if (posY < 485) {
             posY = 485;
             gravity = 0;
-        } else  if (!(posX >= 465 && posX <= 505)) {
+        } else if (!isInElevator) {
             if (posY >= 720 && posY < 790) {
                 posY = 790;
                 gravity = 0;
             }
         }
+        if (posX < 270) {
+            posX = 270;
+        }
 
-        Gdx.app.log("posy", Float.toString(posX));
+        Gdx.app.log("posx", Float.toString(posX));
 
         // isInMovement = false;
 
