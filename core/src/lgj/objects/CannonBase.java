@@ -4,14 +4,14 @@ import assets.AssetLoader;
 import boost.GameObject;
 import boost.SpriteObject;
 
-public class Stock extends GameObject {
+public class CannonBase extends GameObject {
 
     SpriteObject ship;
     boolean isMine;
     float posX, posY, scale;
 
-    public Stock(boolean isMine, String id, int x, int y) {
-        super(1, id);
+    public CannonBase(boolean isMine, String id, int x, int y) {
+        super(4, id);
         this.isMine = isMine;
 
         posX = x;
@@ -25,7 +25,7 @@ public class Stock extends GameObject {
     void spriteInit() {
         posX = 0;
         posY = 0;
-        ship = AssetLoader.getAsset("stock", index);
+        ship = AssetLoader.getAsset("cannonBase", index);
         ship.scaleBy(scale);
     }
 
