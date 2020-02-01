@@ -4,10 +4,11 @@ import assets.AssetLoader;
 import boost.GameObject;
 import boost.SpriteObject;
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.Input;
 
 public class CannonBase extends GameObject {
 
-    SpriteObject ship;
+    SpriteObject cannonBase, cannon;
     boolean isMine;
     float posX, posY, scale;
     String playerUsing = "";
@@ -16,20 +17,35 @@ public class CannonBase extends GameObject {
         super(4, id);
         this.isMine = isMine;
 
-        setPosition(x,y);
+        setPosition(x, y);
         scale = 8;
         spriteInit();
 
-        addActor(ship);
+        addActor(cannonBase);
+        addActor(cannon);
     }
 
     void spriteInit() {
-        ship = AssetLoader.getAsset("cannonBase", index);
-        ship.scaleBy(scale);
+        cannonBase = AssetLoader.getAsset("cannonBase", index);
+        cannonBase.scaleBy(scale);
+        cannon = AssetLoader.getAsset("cannon", index);
+        cannon.scaleBy(scale);
+        cannon.setPosition(400, 400);
+        cannon.setOrigin(50, 50);
     }
 
     public void act(float delta) {
         super.act(delta);
+        if (!playerUsing.equals("")) {
+            if (Gdx.input.isKeyPressed(Input.Keys.UP)) {
+                if(cannon.getRotation() <= 38)
+                cannon.rotateBy(0.5f);
+            }
+            if (Gdx.input.isKeyPressed(Input.Keys.DOWN)) {
+                if(cannon.getRotation() >= -69) cannon.rotateBy(-0.5f);
+            }
+        }
+        Gdx.app.log("rotation", Float.toString(cannon.getRotation()));
         //updatePos();
     }
 
@@ -40,14 +56,14 @@ public class CannonBase extends GameObject {
     }
 
     public void use(String playerId) {
-        if(playerUsing.equals("")) {
+        if (playerUsing.equals("")) {
             playerUsing = playerId;
             Gdx.app.log("using", playerId);
         }
     }
 
     public void leave(String playerId) {
-        if(playerUsing.equals(playerId)) {
+        if (playerUsing.equals(playerId)) {
             playerUsing = "";
             Gdx.app.log("leaving", playerId);
         }

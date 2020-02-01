@@ -34,15 +34,15 @@ public class MyNetSpawner extends GameObject {
     public void spawnCannonBase(String id, String position) {
         switch (position) {
             case "bottom":
-                cannonBase1 = new CannonBase(true, id, 400, 600);
+                cannonBase1 = new CannonBase(true, id, 1630 - 310, 440 - 310);
                 stage.addActor(cannonBase1);
                 break;
             case "middle":
-                cannonBase2 = new CannonBase(true, id, 800, 600);
+                cannonBase2 = new CannonBase(true, id, 1710 - 310, 780 - 310);
                 stage.addActor(cannonBase2);
                 break;
             case "top":
-                cannonBase3 = new CannonBase(true, id , 1200, 600);
+                cannonBase3 = new CannonBase(true, id, 1790 - 310, 1090 - 310);
                 stage.addActor(cannonBase3);
                 break;
         }
@@ -51,15 +51,15 @@ public class MyNetSpawner extends GameObject {
     public void spawnCannonBaseAsMine(String id, String position) {
         switch (position) {
             case "bottom":
-                cannonBase1 = new CannonBase(false, id, 1630, 440);
+                cannonBase1 = new CannonBase(false, id, 1630 - 310, 440 - 310);
                 stage.addActor(cannonBase1);
                 break;
             case "middle":
-                cannonBase2 = new CannonBase(false, id, 1710, 780);
+                cannonBase2 = new CannonBase(false, id, 1710 - 310, 780 - 310);
                 stage.addActor(cannonBase2);
                 break;
             case "top":
-                cannonBase3 = new CannonBase(false, id, 1790, 1090);
+                cannonBase3 = new CannonBase(false, id, 1790 - 310, 1090 - 310);
                 stage.addActor(cannonBase3);
                 break;
         }
