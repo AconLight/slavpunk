@@ -170,7 +170,7 @@ public class Player extends GameObject {
         }
 
 
-        if (!isInElevator)  {
+        if (!isInElevator) {
             gravity += 1;
             posY -= gravity;
         } else {
@@ -187,9 +187,21 @@ public class Player extends GameObject {
                 gravity = 0;
             }
         }
-        if (posX < 270) {
-            posX = 270;
+
+        // Horizontal borders
+        if (posY < 720) {
+            if (posX < 270) {
+                posX = 270;
+            } else if (posX > 1555) posX = 1555;
+        } else {
+            if (posX < 315) {
+                posX = 315;
+            } else {
+                if (posX > 1635) posX = 1635;
+
+            }
         }
+
 
         Gdx.app.log("posx", Float.toString(posX));
 
