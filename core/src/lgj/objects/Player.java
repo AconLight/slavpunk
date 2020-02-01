@@ -6,6 +6,7 @@ import boost.SpriteObject;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
 import com.badlogic.gdx.graphics.Camera;
+import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.mygdx.events.Event;
 import com.mygdx.networking.NetworkManager;
@@ -25,9 +26,17 @@ public class Player extends GameObject {
 
     Camera cam;
 
+    Vector2 camOffset;
+    Vector2 camConstOffset;
+    Vector2 camDirection;
+
     public Player(Stage stage, boolean isMine, String id) {
         super(2, id);
         this.isMine = isMine;
+
+        camOffset = new Vector2();
+        camConstOffset = new Vector2(100, 120);
+        camDirection = new Vector2();
 
         cam = stage.getCamera();
 
@@ -127,9 +136,6 @@ public class Player extends GameObject {
     public void act(float delta) {
         super.act(delta);
 
-        cam.translate(-cam.position.x + posX, -cam.position.y + posY, 0);
-        cam.update();
-        
         prevRight = isRight;
         prevState = state;
         prevStrike = isStrike;
@@ -154,27 +160,32 @@ public class Player extends GameObject {
                 //posY += velocity;
                 //state = "up";
                 isPresedWSAD = true;
+                camDirection.set(camDirection.x, +200);
             }
             if (Gdx.input.isKeyPressed(Input.Keys.DOWN)) {
                 posY -= velocity;
                 //state = "down";
                 isPresedWSAD = true;
+                camDirection.set(camDirection.x, -200);
             }
             if (Gdx.input.isKeyPressed(Input.Keys.RIGHT)) {
                 posX += velocity;
                 isRight = "right";
                 state = "right";
                 isPresedWSAD = true;
+                camDirection.set(200, camDirection.y);
             }
             if (Gdx.input.isKeyPressed(Input.Keys.LEFT)) {
                 posX -= velocity;
                 isRight = "left";
                 state = "left";
                 isPresedWSAD = true;
+                camDirection.set(-200, camDirection.y);
             }
 
             if (!isPresedWSAD) {
                 state = "idle";
+                camDirection.set(0, 0);
             }
         }
 
@@ -185,6 +196,7 @@ public class Player extends GameObject {
         } else {
             posY -= 2;
             state = "idle";
+            camDirection.set(0, 200);
         }
 
 
@@ -229,6 +241,10 @@ public class Player extends GameObject {
             changeAnimation(state, isRight, isStrike);
             if (!prevStrike.equals(isStrike) || !prevRight.equals(isRight) || !prevState.equals(state))
                 sendAnimationUpdate(isStrike);
+
+            camOffset = camOffset.set((camDirection.x * delta + camOffset.x) / (1+delta), (camDirection.y * delta + camOffset.y) / (1+delta));
+            cam.translate(-cam.position.x + posX + camOffset.x + camConstOffset.x, -cam.position.y + posY + camOffset.y + camConstOffset.y, 0);
+            cam.update();
         }
     }
 
