@@ -18,7 +18,7 @@ public class Player extends GameObject {
     String isStrike = "not";
 
     public Player(boolean isMine,String id){
-        super(0, id);
+        super(2, id);
         this.isMine = isMine;
 
         posX = 200;

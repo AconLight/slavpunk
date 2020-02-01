@@ -98,6 +98,7 @@ public class AssetLoader {
         createAsset("graphics/sprites/rightWins.png", "rightWins");
         createAsset("graphics/sprites/light.png", "light");
         createAsset("graphics/sprites/howto.png", "howto");
+        createAsset("graphics/sprites/ship.png", "ship");
         loadAnimations();
 
         soundtrack = Gdx.audio.newMusic(Gdx.files.internal("sounds/soundtrack.wav"));
