@@ -135,6 +135,7 @@ public class Player extends GameObject {
                 isStrike = "not";
             }
 
+            Boolean isPresedWSAD = false;
             if (Gdx.input.isKeyPressed(Input.Keys.UP)) {
                 if (isInElevator) {
                     posY += velocity;
@@ -143,31 +144,37 @@ public class Player extends GameObject {
                 }
                 //posY += velocity;
                 //state = "up";
+                isPresedWSAD = true;
             }
             if (Gdx.input.isKeyPressed(Input.Keys.DOWN)) {
                 posY -= velocity;
                 //state = "down";
+                isPresedWSAD = true;
             }
             if (Gdx.input.isKeyPressed(Input.Keys.RIGHT)) {
                 posX += velocity;
                 isRight = "right";
                 state = "right";
+                isPresedWSAD = true;
             }
             if (Gdx.input.isKeyPressed(Input.Keys.LEFT)) {
                 posX -= velocity;
                 isRight = "left";
                 state = "left";
+                isPresedWSAD = true;
             }
-            //TODO wojtaaas
-//            else {
-//                state = "idle";
-//            }
+
+            if (!isPresedWSAD) {
+                state = "idle";
+            }
         }
 
 
         if (!isInElevator)  {
             gravity += 1;
             posY -= gravity;
+        } else {
+            state = "idle";
         }
 
 
