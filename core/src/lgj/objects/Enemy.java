@@ -121,8 +121,6 @@ public class Enemy extends GameObject {
     public void updatePos() {
         float x = getX();
         float y = getY();
-        Gdx.app.log("Enemy", "x: " + getX());
-        Gdx.app.log("Enemy", "y: " + getY());
         setPosition((posX + x)/2, (posY + y)/2);
     }
 

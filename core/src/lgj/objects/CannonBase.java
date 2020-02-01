@@ -14,8 +14,7 @@ public class CannonBase extends GameObject {
         super(4, id);
         this.isMine = isMine;
 
-        posX = x;
-        posY = y;
+        setPosition(x,y);
         scale = 8;
         spriteInit();
 
@@ -23,15 +22,13 @@ public class CannonBase extends GameObject {
     }
 
     void spriteInit() {
-        posX = 0;
-        posY = 0;
         ship = AssetLoader.getAsset("cannonBase", index);
         ship.scaleBy(scale);
     }
 
     public void act(float delta) {
         super.act(delta);
-        updatePos();
+        //updatePos();
     }
 
     public void updatePos() {

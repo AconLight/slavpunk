@@ -202,9 +202,6 @@ public class Player extends GameObject {
             }
         }
 
-
-        Gdx.app.log("posx", Float.toString(posX));
-
         // isInMovement = false;
 
         updatePos();

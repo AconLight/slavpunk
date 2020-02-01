@@ -34,15 +34,15 @@ public class MyNetSpawner extends GameObject {
     public void spawnCannonBase(String id, String position) {
         switch (position) {
             case "bottom":
-                cannonBase1 = new CannonBase(true, id + NetworkApi.manager.myAddress.ip + NetworkApi.manager.myAddress.port, 400, 200);
+                cannonBase1 = new CannonBase(true, id, 400, 600);
                 stage.addActor(cannonBase1);
                 break;
             case "middle":
-                cannonBase2 = new CannonBase(true, id + NetworkApi.manager.myAddress.ip + NetworkApi.manager.myAddress.port, 400, 400);
+                cannonBase2 = new CannonBase(true, id, 800, 600);
                 stage.addActor(cannonBase2);
                 break;
             case "top":
-                cannonBase3 = new CannonBase(true, id + NetworkApi.manager.myAddress.ip + NetworkApi.manager.myAddress.port, 400, 600);
+                cannonBase3 = new CannonBase(true, id , 1200, 600);
                 stage.addActor(cannonBase3);
                 break;
         }
@@ -51,15 +51,15 @@ public class MyNetSpawner extends GameObject {
     public void spawnCannonBaseAsMine(String id, String position) {
         switch (position) {
             case "bottom":
-                cannonBase1 = new CannonBase(false, id + NetworkApi.manager.myAddress.ip + NetworkApi.manager.myAddress.port, 400, 200);
+                cannonBase1 = new CannonBase(false, id, 400, 600);
                 stage.addActor(cannonBase1);
                 break;
             case "middle":
-                cannonBase2 = new CannonBase(false, id + NetworkApi.manager.myAddress.ip + NetworkApi.manager.myAddress.port, 400, 400);
+                cannonBase2 = new CannonBase(false, id, 800, 600);
                 stage.addActor(cannonBase2);
                 break;
             case "top":
-                cannonBase3 = new CannonBase(false, id + NetworkApi.manager.myAddress.ip + NetworkApi.manager.myAddress.port, 400, 600);
+                cannonBase3 = new CannonBase(false, id, 1200, 600);
                 stage.addActor(cannonBase3);
                 break;
         }
