@@ -36,7 +36,6 @@ public class Player extends GameObject {
     }
 
     void animationInit(){
-        SpriteObject animation = new SpriteObject();
         posX = 0;
         posY = 0;
         head = AssetLoader.getAnimation("head");
@@ -80,17 +79,17 @@ public class Player extends GameObject {
             case "idle":{
 
                     head.chooseAnimation( "idle_" + isRight);
-                    body.chooseAnimation("idle_" + isRight);
-                    body.chooseAnimation("idle_" + isRight);
+                    arm.chooseAnimation("idle_" + isRight);
+                    hamer.chooseAnimation("idle_" + isRight);
                     body.chooseAnimation("idle_" + isRight);
                     legs.chooseAnimation("idle_" + isRight);
-
+                    break;
             }
             default:{
                 head.chooseAnimation("head_" + state);
+                arm.chooseAnimation("arm_" + state);
+                hamer.chooseAnimation("hamer_" + state);
                 body.chooseAnimation("body_" + state);
-                body.chooseAnimation("arm_" + state);
-                body.chooseAnimation("hamer_" + state);
                 legs.chooseAnimation("legs_" + state);
             }
         }

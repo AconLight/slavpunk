@@ -147,6 +147,12 @@ public class AssetLoader {
         createAnimation("body", "body");
         createAnimation("small", "small");
         createAnimation("platform1", "platform1");
+
+        createAnimation("head", "head");
+        createAnimation("arm", "arm");
+        createAnimation("body", "body");
+        createAnimation("legs", "legs");
+        createAnimation("hamer", "hamer");
     }
 
 
