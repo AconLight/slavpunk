@@ -25,7 +25,7 @@ public class Ship extends GameObject {
     void spriteInit() {
         posX = 0;
         posY = 0;
-        ship = AssetLoader.getAsset("ship");
+        ship = AssetLoader.getAsset("ship", index);
         ship.scaleBy(scale);
     }
 

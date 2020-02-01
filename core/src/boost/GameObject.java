@@ -67,6 +67,7 @@ public class GameObject extends Group {
     public void draw(Batch batch, float parentAlfa) {
         batch.setShader(shader);
         if (GameObjectManager.currentIndex == index) {
+            Gdx.app.log("GameObject", "index: " + index);
             super.draw(batch, parentAlfa * alfa);
         }
         else if (this instanceof GameObject) {
