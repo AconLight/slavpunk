@@ -148,7 +148,7 @@ public class Player extends GameObject {
             if (Gdx.input.isKeyPressed(Input.Keys.UP)) {
                 if (isInElevator) {
                     posY += velocity;
-                } else if (posY == 485 || posY == 790) {
+                } else if (posY == 485 || posY == 790 || posY == 1097) {
                     gravity -= 10;
                 }
                 //posY += velocity;
@@ -183,6 +183,7 @@ public class Player extends GameObject {
             gravity += 1;
             posY -= gravity;
         } else {
+            posY -= 2;
             state = "idle";
         }
 
@@ -190,9 +191,15 @@ public class Player extends GameObject {
         if (posY < 485) {
             posY = 485;
             gravity = 0;
+        } else if (posY > 1130) {
+            posY = 1130;
         } else if (!isInElevator) {
             if (posY >= 720 && posY < 790) {
                 posY = 790;
+                gravity = 0;
+            }
+            if (posY >= 1020 && posY < 1097) {
+                posY = 1097;
                 gravity = 0;
             }
         }
@@ -212,6 +219,8 @@ public class Player extends GameObject {
         }
 
         // isInMovement = false;
+        Gdx.app.log("y", Float.toString(posY));
+
 
         updatePos();
 

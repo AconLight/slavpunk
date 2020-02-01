@@ -51,15 +51,15 @@ public class MyNetSpawner extends GameObject {
     public void spawnCannonBaseAsMine(String id, String position) {
         switch (position) {
             case "bottom":
-                cannonBase1 = new CannonBase(false, id, 400, 600);
+                cannonBase1 = new CannonBase(false, id, 1630, 440);
                 stage.addActor(cannonBase1);
                 break;
             case "middle":
-                cannonBase2 = new CannonBase(false, id, 800, 600);
+                cannonBase2 = new CannonBase(false, id, 1710, 780);
                 stage.addActor(cannonBase2);
                 break;
             case "top":
-                cannonBase3 = new CannonBase(false, id, 1200, 600);
+                cannonBase3 = new CannonBase(false, id, 1790, 1090);
                 stage.addActor(cannonBase3);
                 break;
         }
