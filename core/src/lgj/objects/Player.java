@@ -18,6 +18,12 @@ import com.mygdx.networking.NetworkManager;
 
 public class Player extends GameObject {
 
+    public static Color[] colors = {Color.PINK, Color.BLUE, Color.PURPLE, Color.YELLOW, Color.ORANGE, Color.BROWN};
+    public static int colNumb = 0;
+
+
+    public int myColId;
+    public Color myCol;
     SpriteObject head, body, arm, legs, hamer;
     boolean isMine;
     float posX, posY, scale, velocity;
@@ -72,6 +78,20 @@ public class Player extends GameObject {
         addActor(arm);
         addActor(legs);
         addActor(progress.bar);
+
+
+        if (NetworkManager.networkManager.isHost) {
+            myCol = colors[colNumb];
+            NetworkManager.networkManager.addEventToSend(new Event("id setMyCol int " + colNumb));
+            colNumb++;
+        }
+
+
+    }
+
+    public void setMyCol(Integer number) {
+        myCol = colors[number];
+        myColId = colNumb;
     }
 
     void animationInit() {
