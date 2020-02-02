@@ -5,6 +5,7 @@ import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.mygdx.events.Event;
 import com.mygdx.networking.NetworkApi;
 import com.mygdx.networking.NetworkManager;
+import com.mygdx.scenes.MySceneManager;
 import lgj.objects.*;
 
 import java.util.Random;
@@ -94,10 +95,11 @@ public class MyNetSpawner extends GameObject {
     }
 
     public void spawnNextWave(Integer x,  Integer head, Integer renka, Integer body, Integer weapon, Integer weapon_color, Integer eye, Integer eye_color, Integer legs, Integer legs_color, Float scale) {
-
-        stage.addActor(new Enemy(x, 200, true, "enemy" + enemyNumb,
-            head, renka, body, weapon, weapon_color, eye, eye_color, legs, legs_color, scale
-        ));
+        Enemy e = new Enemy(x, 200, true, "enemy" + enemyNumb,
+                head, renka, body, weapon, weapon_color, eye, eye_color, legs, legs_color, scale
+        );
+        MySceneManager.game.enemies.add(e);
+        stage.addActor(e);
     }
 
     public void spawnAsMine() {

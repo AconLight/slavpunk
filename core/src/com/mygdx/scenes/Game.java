@@ -6,11 +6,16 @@ import com.mygdx.events.Event;
 import com.mygdx.gameObjects.NetSpawner;
 import com.mygdx.networking.NetworkApi;
 import com.mygdx.networking.NetworkManager;
+import lgj.objects.Enemy;
 import lgj.spawner.MyNetSpawner;
+
+import java.util.ArrayList;
 
 public class Game extends MyScene {
 
     MyNetSpawner netSpawner;
+
+    public static ArrayList<Enemy> enemies = new ArrayList<>();
 
     public Game() {
         super();
@@ -21,14 +26,14 @@ public class Game extends MyScene {
 
     public void spawn() {
         netSpawner.spawnAsMine();
-        netSpawner.spawnCannonBaseAsMine("cannonBase1", "bottom");
-        netSpawner.spawnCannonBaseAsMine("cannonBase2", "middle");
-        netSpawner.spawnCannonBaseAsMine("cannonBase3", "top");
         NetworkManager.networkManager.addEventToSend(new Event("spawner spawn String player" + NetworkApi.manager.myAddress.ip + NetworkApi.manager.myAddress.port));
         if(NetworkManager.networkManager.isHost)  {
-            NetworkManager.networkManager.addEventToSend(new Event("spawner spawnCannonBase String cannonBase1 String bottom" + NetworkApi.manager.myAddress.ip + NetworkApi.manager.myAddress.port));
-            NetworkManager.networkManager.addEventToSend(new Event("spawner spawnCannonBase String cannonBase2 String middle" + NetworkApi.manager.myAddress.ip + NetworkApi.manager.myAddress.port));
-            NetworkManager.networkManager.addEventToSend(new Event("spawner spawnCannonBase String cannonBase3 String top" + NetworkApi.manager.myAddress.ip + NetworkApi.manager.myAddress.port));
+            netSpawner.spawnCannonBaseAsMine("cannonBase1", "bottom");
+            netSpawner.spawnCannonBaseAsMine("cannonBase2", "middle");
+            netSpawner.spawnCannonBaseAsMine("cannonBase3", "top");
+            NetworkManager.networkManager.addEventToSend(new Event("spawner spawnCannonBase String cannonBase1 String bottom"));
+            NetworkManager.networkManager.addEventToSend(new Event("spawner spawnCannonBase String cannonBase2 String middle"));
+            NetworkManager.networkManager.addEventToSend(new Event("spawner spawnCannonBase String cannonBase3 String top"));
         }
     }
     public void act() {

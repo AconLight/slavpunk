@@ -6,6 +6,7 @@ import boost.SpriteObject;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
 import com.mygdx.events.Event;
+import com.mygdx.networking.NetworkApi;
 import com.mygdx.networking.NetworkManager;
 
 public class CannonBase extends GameObject {
@@ -43,7 +44,6 @@ public class CannonBase extends GameObject {
     }
 
     float prevSendRotation = 0;
-
     public void act(float delta) {
         super.act(delta);
         if (!playerUsing.equals("")) {
@@ -54,6 +54,12 @@ public class CannonBase extends GameObject {
             if (Gdx.input.isKeyPressed(Input.Keys.DOWN)) {
                 if(realRotation >= -69)
                     realRotation -= 0.5f;
+            }
+            if (Gdx.input.isKeyJustPressed(Input.Keys.G)) {
+                float vx = (float)(50*Math.cos(myRotation*Math.PI/180));
+                float vy = (float)(50*Math.sin(myRotation*Math.PI/180));
+                shoot(vx, vy, "mine");
+                NetworkManager.networkManager.addEventToSend(new Event(id + " shoot " + "float " + vx + " float " + vy + " String not"));
             }
         }
 
@@ -71,6 +77,16 @@ public class CannonBase extends GameObject {
         float x = getX();
         float y = getY();
         setPosition((posX + x) / 2, (posY + y) / 2);
+    }
+
+    public void shoot(Float vx, Float vy, String isMine) {
+        Gdx.app.log("CannonBase", "vx: " + vx + ", vy: " + vy);
+        Boolean myIsMine = false;
+        if (isMine.equals("mine")) {
+            myIsMine = true;
+        }
+        getStage().addActor(new Proj(myIsMine, "proj" + NetworkApi.manager.myAddress.ip + NetworkApi.manager.myAddress.port,
+                cannon.getX() + getX(), cannon.getY() + getY(), vx, vy));
     }
 
     public void use(String playerId) {

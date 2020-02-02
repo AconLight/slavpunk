@@ -76,7 +76,7 @@ public class AssetLoader {
         createAsset("graphics/sprites/awaiting.png", "awaiting");
         createAsset("graphics/sprites/player_joined.png", "player_joined");
         createAsset("graphics/sprites/accept.png", "accept");
-
+        createAsset("graphics/sprites/proj.png", "proj");
 
         createAsset("red.png", "redartedSplash");
         createAsset("graphics/sprites/menu_bg.png", "bgSplash");
