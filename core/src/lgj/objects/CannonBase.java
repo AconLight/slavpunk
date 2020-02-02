@@ -18,6 +18,9 @@ public class CannonBase extends GameObject {
     private float realRotation;
     private float myRotation;
 
+    //AssetLoader.pistol.play();  dzwiek strzelania
+
+
     public CannonBase(boolean isMine, String id, int x, int y) {
         super(4, id);
         this.isMine = isMine;
@@ -93,6 +96,7 @@ public class CannonBase extends GameObject {
         if (playerUsing.equals("")) {
             playerUsing = playerId;
             Gdx.app.log("using", playerId);
+            AssetLoader.cannonStart.play();
         }
     }
 

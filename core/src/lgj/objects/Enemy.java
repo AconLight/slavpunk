@@ -6,9 +6,12 @@ import boost.SpriteObject;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
 import com.badlogic.gdx.graphics.Color;
+import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.mygdx.events.Event;
+import com.mygdx.networking.NetworkApi;
 import com.mygdx.networking.NetworkManager;
 
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Random;
@@ -115,6 +118,12 @@ public class Enemy extends GameObject {
         }
 
         updatePos();
+
+        if(posX < 1700) {
+            getStage().addActor(new Part(true, "part" + NetworkApi.manager.myAddress.ip + NetworkApi.manager.myAddress.port));
+            // TODO networkingowo usuwac
+            remove();
+        }
 
         if (isMine) {
             sendPos();

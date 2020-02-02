@@ -40,6 +40,8 @@ public class LobbyObject extends GameObject {
         play.addComponent(new Clickable(play, (SpriteObject) play, () -> startGameClick()));
         play.setPosition(1300, 1280/2 - 128 + 128 + 64);
         addActor(play);
+        AssetLoader.soundtrack.setLooping(true);
+        AssetLoader.soundtrack.play();
     }
 
     public void startGameClick() {

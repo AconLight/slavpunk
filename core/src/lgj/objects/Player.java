@@ -11,6 +11,7 @@ import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.mygdx.events.Event;
+import com.mygdx.networking.NetworkApi;
 import com.mygdx.networking.NetworkManager;
 
 
@@ -23,6 +24,7 @@ public class Player extends GameObject {
     String isStrike = "not";
     float gravity = 0;
     boolean isInCannon = false;
+    Vacuum vacuum;
 
     final int elevatorLeft = 415;
     final int elevatorRight = 560;
@@ -226,6 +228,14 @@ public class Player extends GameObject {
 
         // Horizontal borders
         if (posY < 720) { // First floor
+            if(vacuum == null) {
+                vacuum = (Vacuum) GameObjectManager.gameObjects.get("vacuum" + NetworkApi.manager.myAddress.ip + NetworkApi.manager.myAddress.port);
+            }
+            if (posX > 770 && posX < 940) {
+                vacuum.setOn();
+            } else {
+                vacuum.setOff();
+            }
             if (posX < 270) {
                 posX = 270;
             } else if (posX >= 1555) {
@@ -277,6 +287,7 @@ public class Player extends GameObject {
         }
 
         updatePos();
+        Gdx.app.log("posx", Float.toString(posX));
 
         if (isMine) {
             sendPos();

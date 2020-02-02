@@ -25,8 +25,11 @@ import java.util.stream.Stream;
 public class AssetLoader {
     private static HashMap<String, Texture> assets = new HashMap<>();
     private static HashMap<String, HashMap<String, Animation<TextureRegion>>> animations = new HashMap<>();
+
     public static Music soundtrack, soundtrack_menu;
-    public static Sound pistol, jump, swap, end, gun, tarcza;
+    public static Sound pistol, jump, swap, end, gun, tarcza, cannonStart;
+
+
 
     public static SpriteObject getAsset(String name) {
         SpriteObject gameObject = new SpriteObject();
@@ -104,18 +107,23 @@ public class AssetLoader {
         createAsset("graphics/sprites/stock.png", "cannonBase");
         createAsset("graphics/sprites/cannon.png", "cannon");
         createAsset("graphics/sprites/background.png", "background");
+        createAsset("graphics/sprites/part.png", "part");
 
         loadAnimations();
 
         soundtrack = Gdx.audio.newMusic(Gdx.files.internal("sounds/soundtrack.wav"));
         soundtrack_menu = Gdx.audio.newMusic(Gdx.files.internal("sounds/soundtrack_menu.wav"));
 
-        pistol = Gdx.audio.newSound(Gdx.files.internal("sounds/pistol.mp3"));
+        pistol = Gdx.audio.newSound(Gdx.files.internal("sounds/shot.wav"));
         jump = Gdx.audio.newSound(Gdx.files.internal("sounds/jump.mp3"));
         swap = Gdx.audio.newSound(Gdx.files.internal("sounds/swap.mp3"));
         end = Gdx.audio.newSound(Gdx.files.internal("sounds/end.mp3"));
         gun = Gdx.audio.newSound(Gdx.files.internal("sounds/gun.mp3"));
         tarcza = Gdx.audio.newSound(Gdx.files.internal("sounds/tarcza.mp3"));
+        cannonStart = Gdx.audio.newSound(Gdx.files.internal("sounds/getPistol.wav"));
+
+        //wywolanie sound AssetLoader.[nazwa].play();
+
     }
 
 
@@ -166,7 +174,9 @@ public class AssetLoader {
         createAnimation("enemy_eye", "enemy_eye");
         createAnimation("enemy_renka", "enemy_renka");
         createAnimation("enemy_weapon", "enemy_weapon");
-        
+
+
+
     }
 
 

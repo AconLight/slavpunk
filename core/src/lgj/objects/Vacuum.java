@@ -9,9 +9,10 @@ public class Vacuum extends GameObject {
     SpriteObject ship;
     boolean isMine;
     float posX, posY, scale;
+    boolean isOn = false;
 
     public Vacuum(boolean isMine, String id) {
-        super(3, id);
+        super(6, id);
         this.isMine = isMine;
 
         posX = 200;
@@ -38,5 +39,13 @@ public class Vacuum extends GameObject {
         float x = getX();
         float y = getY();
         setPosition((posX + x) / 2, (posY + y) / 2);
+    }
+
+    public void setOn() {
+        isOn = true;
+    }
+
+    public void setOff() {
+        isOn = false;
     }
 }
