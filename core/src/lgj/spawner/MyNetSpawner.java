@@ -86,7 +86,7 @@ public class MyNetSpawner extends GameObject {
 
 
 
-        float scale = (float)(4 + rand.nextFloat()*12*(1/( 1 + Math.pow(Math.E,(-1*enemyNumb/200f)))));
+        float scale = (float)(4 + rand.nextFloat()*10*(1/( 1 + Math.pow(Math.E,(-1*enemyNumb/200f)))));
         int x = (int)(8000 + a * 25 + rand.nextInt(10));
         String id = "enemy" + enemyNumb + NetworkApi.manager.myAddress.ip + NetworkApi.manager.myAddress.port;
         spawnNextWave(id, x,

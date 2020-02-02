@@ -47,8 +47,9 @@ public class Ship extends GameObject {
         ship.scaleBy(scale);
         boosters = AssetLoader.getAsset("boosters", index);
         boosters.scaleBy(scale);
+        boosters.setShader("drunk");
     }
-
+    float time = 0;
     public void act(float delta) {
         super.act(delta);
         updatePos();
@@ -57,6 +58,11 @@ public class Ship extends GameObject {
             if (health < maxHealth)
                 health++;
         }
+
+        time += delta;
+        boosters.shader.begin();
+        boosters.shader.setUniformf("time", time/3);
+        boosters.shader.end();
     }
 
     public void updatePos() {
