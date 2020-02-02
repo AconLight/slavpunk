@@ -6,6 +6,8 @@ import boost.SpriteObject;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.g2d.Batch;
+import com.mygdx.events.Event;
+import com.mygdx.networking.NetworkManager;
 
 public class Ship extends GameObject {
 
@@ -14,6 +16,10 @@ public class Ship extends GameObject {
     float posX, posY, scale;
     int health, maxHealth;
     Progress healthBar;
+
+    public void gameOver() {
+
+    }
 
     public Ship(boolean isMine, String id) {
         super(1, id);
@@ -54,7 +60,10 @@ public class Ship extends GameObject {
         health--;
         healthBar.getBar().setValue((float) health / (float) maxHealth);
         if (health <= 0) {
-            // TODO gameover
+            if (NetworkManager.networkManager.isHost) {
+                NetworkManager.networkManager.addEventToSend(new Event("ship gameOver"));
+                gameOver();
+            }
         }
     }
 
