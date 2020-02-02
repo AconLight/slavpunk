@@ -43,12 +43,11 @@ public class Enemy extends GameObject {
         this.eye_color = eye_color;
         this.legs = legs;
         this.legs_color = legs_color;
-        maxHealth = health;
 
         health = (int) ((scale-2)*(scale-2));
+        maxHealth = health;
 
-        progress = new Progress(true, "health" + id, 30, 370, 200, 30, Color.RED);
-        progress.index = 7;
+        progress = new Progress( (int)(10*scale), (int)(80*scale), (int)(50*scale), (int)(6*scale), Color.RED);
         addActor(progress.getBar());
 
         posX = x;
@@ -143,6 +142,7 @@ public class Enemy extends GameObject {
 
     public void die(Integer seed) { // just damage
         health--;
+        Gdx.app.log("helt", health + " " + maxHealth + "" + (float)health/(float)maxHealth);
         progress.getBar().setValue((float)health/(float)maxHealth);
         if (health <= 0) {
             dieHard(seed);
