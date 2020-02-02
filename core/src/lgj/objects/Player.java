@@ -176,6 +176,7 @@ public class Player extends GameObject {
 
     public void restartGame() {
         MySceneManager.game.restart();
+        MySceneManager.switchToScene(MySceneManager.game);
     }
 
     public void act(float delta) {

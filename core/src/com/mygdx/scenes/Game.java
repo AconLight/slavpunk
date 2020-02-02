@@ -36,6 +36,7 @@ public class Game extends MyScene {
     }
 
     public void restart() {
+        MySceneManager.pause.restart();
         i = 0;
         netSpawner = new MyNetSpawner(stage);
         enemies = new ArrayList<>();

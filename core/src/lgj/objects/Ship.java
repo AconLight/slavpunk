@@ -8,6 +8,7 @@ import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.g2d.Batch;
 import com.mygdx.events.Event;
 import com.mygdx.networking.NetworkManager;
+import com.mygdx.scenes.MySceneManager;
 
 public class Ship extends GameObject {
 
@@ -18,10 +19,7 @@ public class Ship extends GameObject {
     Progress healthBar;
 
     public void gameOver() {
-        if (NetworkManager.networkManager.isHost) {
-            NetworkManager.networkManager.addEventToSend(new Event("ship gameOver"));
-            gameOver();
-        }
+        MySceneManager.switchToScene(MySceneManager.pause);
     }
 
     public Ship(boolean isMine, String id) {
