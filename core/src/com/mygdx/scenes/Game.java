@@ -9,7 +9,7 @@ import com.mygdx.networking.NetworkApi;
 import com.mygdx.networking.NetworkManager;
 import lgj.objects.Enemy;
 import lgj.spawner.MyNetSpawner;
-
+import java.util.Random;
 import java.util.ArrayList;
 
 public class Game extends MyScene {
@@ -41,12 +41,20 @@ public class Game extends MyScene {
             NetworkManager.networkManager.addEventToSend(new Event("spawner spawnCannonBase String cannonBase3 String top"));
         }
     }
+    Random rand = new Random();
+
+    int waveNumb = 5;
+    int waveDur = 1000;
     public void act() {
         super.act();
 
-        if (i%2000 < 15*5 && i%5 == 0) {
+        if (i%waveDur < waveNumb*15 && i%15 == 0) {
             if(NetworkManager.networkManager.isHost) {
-                netSpawner.spawnMinionEveryWhere(i % 4000 / 5);
+                netSpawner.spawnMinionEveryWhere(i % waveDur);
+                if (rand.nextInt(waveNumb) == 0) {
+                    waveNumb++;
+                    waveDur = waveNumb*200;
+                }
             }
         }
         i++;
