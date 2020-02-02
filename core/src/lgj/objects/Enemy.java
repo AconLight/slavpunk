@@ -47,7 +47,7 @@ public class Enemy extends GameObject {
 
         health = (int) ((scale-2)*(scale-2));
 
-        progress = new Progress(true, "health" + id, 0, 300, 200, 30, Color.RED);
+        progress = new Progress(true, "health" + id, 30, 370, 200, 30, Color.RED);
         progress.index = 7;
         addActor(progress.getBar());
 
