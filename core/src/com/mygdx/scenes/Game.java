@@ -5,6 +5,7 @@ import boost.MyScene;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.OrthographicCamera;
+import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.mygdx.events.Event;
 import com.mygdx.gameObjects.NetSpawner;
 import com.mygdx.networking.NetworkApi;
@@ -32,6 +33,21 @@ public class Game extends MyScene {
     public Game() {
         super();
         netSpawner = new MyNetSpawner(stage);
+    }
+
+    public void restart() {
+        i = 0;
+        netSpawner = new MyNetSpawner(stage);
+        enemies = new ArrayList<>();
+        players = new ArrayList<>();
+        playersNumb = 0;
+        waveNumb = 5;
+        waveDur = 1000;
+        stage.clear();
+//        for (Actor a: stage.getActors()) {
+//            a.remove();
+//        }
+        spawn();
     }
 
     public int i = 0;

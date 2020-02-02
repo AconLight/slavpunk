@@ -27,7 +27,7 @@ public class CannonBase extends GameObject {
     public ArrayList<String> playerIds;
     public ArrayList<Progress> bars;
 
-    //AssetLoader.pistol.play();  dzwiek strzelania
+    //;  dzwiek strzelania
 
 
     public CannonBase(boolean isMine, String id, int x, int y) {
@@ -150,6 +150,7 @@ public class CannonBase extends GameObject {
         for (int i = 0; i < parts.size(); i++) {
             parts.set(i, parts.get(i) - 1);
         }
+        AssetLoader.pistol.play();
     }
 
     public void use(String playerId) {
