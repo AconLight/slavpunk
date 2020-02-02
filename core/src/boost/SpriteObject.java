@@ -19,7 +19,7 @@ public class SpriteObject extends GameObject {
 
     public Color color;
 
-    private float time;
+    public float time;
 
     public SpriteObject() {
         super();

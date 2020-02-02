@@ -51,6 +51,8 @@ public class LobbyObject extends GameObject {
 
     public void startGame() {
         MySceneManager.switchToScene(MySceneManager.game);
+        MySceneManager.game.i = 0;
+        MySceneManager.game.spawn();
     }
 
     public void sendStartGame() {

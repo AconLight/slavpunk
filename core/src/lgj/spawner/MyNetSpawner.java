@@ -1,6 +1,7 @@
 package lgj.spawner;
 
 import boost.GameObject;
+import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.mygdx.events.Event;
 import com.mygdx.networking.NetworkApi;
@@ -31,6 +32,7 @@ public class MyNetSpawner extends GameObject {
 
     public void spawn(String id) {
         test = new Player(stage, false, id);
+        MySceneManager.game.playersNumb++;
         stage.addActor(test);
     }
 
@@ -82,20 +84,21 @@ public class MyNetSpawner extends GameObject {
         int legs = rand.nextInt(3) + 1;
         int legs_color = rand.nextInt(4) + 1;
 
-        int x = 4000 + a * 400 + rand.nextInt(300);
+        int x = 8000 + a * 400 + rand.nextInt(300);
 
         float scale = 4 + rand.nextFloat()*2;
-
-        spawnNextWave(x,
+        String id = "enemy" + enemyNumb + NetworkApi.manager.myAddress.ip + NetworkApi.manager.myAddress.port;
+        spawnNextWave(id, x,
                 head, renka, body, weapon, weapon_color, eye, eye_color, legs, legs_color, scale
         );
-        NetworkManager.networkManager.addEventToSend(new Event("spawner spawnNextWave int " + x + " int " +
+        NetworkManager.networkManager.addEventToSend(new Event("spawner spawnNextWave String " + id + " int " + x + " int " +
                 head + " int " + renka + " int " + body + " int " + weapon + " int " + weapon_color + " int " + eye + " int " + eye_color + " int " + legs + " int " + legs_color + " float " + scale
         ));
     }
 
-    public void spawnNextWave(Integer x,  Integer head, Integer renka, Integer body, Integer weapon, Integer weapon_color, Integer eye, Integer eye_color, Integer legs, Integer legs_color, Float scale) {
-        Enemy e = new Enemy(x, 200, true, "enemy" + enemyNumb,
+    public void spawnNextWave(String id, Integer x,  Integer head, Integer renka, Integer body, Integer weapon, Integer weapon_color, Integer eye, Integer eye_color, Integer legs, Integer legs_color, Float scale) {
+        enemyNumb++;
+        Enemy e = new Enemy(stage, x, -200, true, id,
                 head, renka, body, weapon, weapon_color, eye, eye_color, legs, legs_color, scale
         );
         MySceneManager.game.enemies.add(e);
@@ -103,17 +106,19 @@ public class MyNetSpawner extends GameObject {
     }
 
     public void spawnAsMine() {
+        Gdx.app.log("MyNetSpawner", "spawn vacuum");
+        vacuum = new Vacuum(true, "vacuum");
         test = new Player(stage,true, "player" + NetworkApi.manager.myAddress.ip + NetworkApi.manager.myAddress.port);
+        MySceneManager.game.playersNumb++;
         ship = new Ship(true, "ship" + NetworkApi.manager.myAddress.ip + NetworkApi.manager.myAddress.port);
         elevator = new Elevator(true, "elevator" + NetworkApi.manager.myAddress.ip + NetworkApi.manager.myAddress.port);
-        vacuum = new Vacuum(true, "vacuum" + NetworkApi.manager.myAddress.ip + NetworkApi.manager.myAddress.port);
         pipes = new Pipes(true, "pipes" + NetworkApi.manager.myAddress.ip + NetworkApi.manager.myAddress.port);
         background = new Background(true, "background" + NetworkApi.manager.myAddress.ip + NetworkApi.manager.myAddress.port);
 
+        stage.addActor(vacuum);
         stage.addActor(test);
         stage.addActor(ship);
         stage.addActor(elevator);
-        stage.addActor(vacuum);
         stage.addActor(pipes);
         stage.addActor(background);
     }

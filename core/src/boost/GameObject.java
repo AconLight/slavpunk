@@ -32,7 +32,13 @@ public class GameObject extends Group {
 
     public void create(float index) {
         this.index = index;
+        Gdx.app.log("GameObject", "creating " + id);
         GameObjectManager.registerCreationOfGameObject(this, id);
+        if (GameObjectManager.gameObjects.get(id) == null) {
+            Gdx.app.log("GameObject", "null " + id);
+        } else {
+            Gdx.app.log("GameObject", "not null " + id);
+        }
         ShaderProgram shader = new ShaderProgram(Gdx.files.internal("shaders/example.vert"), Gdx.files.internal("shaders/example.frag"));
         setShader(shader);
         components = new ArrayList<>();

@@ -37,10 +37,17 @@ public class Player extends GameObject {
     float camZoom;
     float camDirectionZoom;
 
-    public Player(Stage stage, boolean isMine, String id) {
-        super(2, id);
-        this.isMine = isMine;
+    Boolean isOnVacuum;
 
+    CannonBase current;
+
+    public int parts;
+
+    public Player(Stage stage, boolean isMine, String id) {
+        super(5, id);
+        parts = 0;
+        this.isMine = isMine;
+        isOnVacuum = false;
         camOffset = new Vector2();
         camConstOffset = new Vector2(100, 120);
         camDirection = new Vector2();
@@ -51,7 +58,7 @@ public class Player extends GameObject {
         posX = 300;
         posY = 485;
         scale = 4;
-        velocity = 5;
+        velocity = 10;
         isRight = "right";
         state = "idle";
         animationInit();
@@ -141,6 +148,9 @@ public class Player extends GameObject {
 
     private String prevStrike = "", prevState = "", prevRight = "";
 
+    boolean canPick = false;
+    boolean canFix = false;
+
     public void act(float delta) {
         super.act(delta);
 
@@ -164,7 +174,7 @@ public class Player extends GameObject {
                     if (isInElevator) {
                         posY += velocity;
                     } else if (posY == 485 || posY == 790 || posY == 1097) {
-                        gravity -= 10;
+                        gravity -= 15;
                     }
                     //posY += velocity;
                     //state = "up";
@@ -196,6 +206,25 @@ public class Player extends GameObject {
             if (!isPresedWSAD) {
                 state = "idle";
                 camDirection.set(0, 0);
+            }
+
+            if (isStrike.equals("isStrike")) {
+                if (hamer.animations.get("strike_" + isRight).getKeyFrameIndex(hamer.time) < 7) {
+                    canPick = true;
+                    canFix = true;
+                }
+                if (hamer.animations.get("strike_" + isRight).getKeyFrameIndex(hamer.time) == 7) {
+                    if (isOnVacuum && canPick) {
+                        vacuum.pickPart(id);
+                        NetworkManager.networkManager.addEventToSend(new Event("vacuum pickPart String " + id));
+                    }
+                    if (isInCannon && canFix && false) {
+                        current.fix(id);
+                        NetworkManager.networkManager.addEventToSend(new Event(current.id " pickPart String " + id));
+                    }
+                    canPick = false;
+                    canFix = false;
+                }
             }
         }
 
@@ -229,12 +258,20 @@ public class Player extends GameObject {
         // Horizontal borders
         if (posY < 720) { // First floor
             if(vacuum == null) {
-                vacuum = (Vacuum) GameObjectManager.gameObjects.get("vacuum" + NetworkApi.manager.myAddress.ip + NetworkApi.manager.myAddress.port);
+                vacuum = (Vacuum) GameObjectManager.gameObjects.get("vacuum");
+                vacuum.parts.add(3);
+                vacuum.playerIds.add(id);
             }
             if (posX > 770 && posX < 940) {
-                vacuum.setOn();
+                if (!isOnVacuum) {
+                    isOnVacuum = true;
+                    vacuum.setOn();
+                }
             } else {
-                vacuum.setOff();
+                if (isOnVacuum) {
+                    isOnVacuum = false;
+                    vacuum.setOff();
+                }
             }
             if (posX < 270) {
                 posX = 270;
@@ -243,6 +280,10 @@ public class Player extends GameObject {
                 if(!isInCannon) {
                     ((CannonBase) GameObjectManager.gameObjects.get("cannonBase1")).use(id);
                     isInCannon = true;
+                }
+                if (!isOnVacuum) {
+                    isOnVacuum = true;
+                    vacuum.setOn();
                 }
             } else {
                 if(isInCannon) {
@@ -287,7 +328,6 @@ public class Player extends GameObject {
         }
 
         updatePos();
-        Gdx.app.log("posx", Float.toString(posX));
 
         if (isMine) {
             sendPos();
@@ -312,7 +352,7 @@ public class Player extends GameObject {
     public void updatePos() {
         float x = getX();
         float y = getY();
-        setPosition((posX + x) / 2, (posY + y) / 2);
+        setPosition((posX*19 + x) / 20, (posY*19 + y) / 20);
     }
 
     private float lastSendX = posX;

@@ -3,6 +3,7 @@ package lgj.objects;
 import assets.AssetLoader;
 import boost.GameObject;
 import boost.SpriteObject;
+import com.badlogic.gdx.graphics.g2d.Batch;
 
 public class Elevator extends GameObject {
 
@@ -11,7 +12,7 @@ public class Elevator extends GameObject {
     float posX, posY, scale;
 
     public Elevator(boolean isMine, String id) {
-        super(3, id);
+        super(6, id);
         this.isMine = isMine;
 
         posX = 200;
@@ -20,6 +21,7 @@ public class Elevator extends GameObject {
         spriteInit();
 
         addActor(elevator);
+        elevator.setShader("drunk");
     }
 
     void spriteInit() {
@@ -29,9 +31,14 @@ public class Elevator extends GameObject {
         elevator.scaleBy(scale);
     }
 
+    float time = 0;
     public void act(float delta) {
         super.act(delta);
         updatePos();
+        time += delta;
+        elevator.shader.begin();
+        elevator.shader.setUniformf("time", time/3);
+        elevator.shader.end();
     }
 
     public void updatePos() {

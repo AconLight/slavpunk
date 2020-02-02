@@ -5,6 +5,7 @@ import boost.GameObject;
 import boost.GameObjectManager;
 import boost.SpriteObject;
 import com.mygdx.networking.NetworkApi;
+import java.util.Random;
 
 public class Part extends GameObject {
 
@@ -13,14 +14,20 @@ public class Part extends GameObject {
     float posX, posY, scale, velocity;
     Vacuum vacuum;
 
-    public Part(boolean isMine, String id) {
+    float gravity = -0.2f;
+    float vx, vy;
+
+
+    public Part(float x, float y, boolean isMine, String id, int seed) {
         super(3, id);
         this.isMine = isMine;
-
-        setPosition( 1700, 0);
-        posX = 1700;
-        posY = 0;
-        scale = 8;
+        Random rand = new Random((long)seed);
+        vx = rand.nextInt(7) - 3;
+        vy = rand.nextInt(12);
+        setPosition( x, y);
+        posX = x;
+        posY = y;
+        scale = 6;
         spriteInit();
         velocity = 3;
 
@@ -42,20 +49,28 @@ public class Part extends GameObject {
 
         if (posX > 800 && posX < 850) {
             if(vacuum == null) {
-                vacuum = (Vacuum) GameObjectManager.gameObjects.get("vacuum" + NetworkApi.manager.myAddress.ip + NetworkApi.manager.myAddress.port);
+                vacuum = (Vacuum) GameObjectManager.gameObjects.get("vacuum");
             }
             if(vacuum.isOn) {
                 velocity = 0;
                 posY += 3;
             } else {
                 velocity = 3;
-                posY = 0;
+                posY = -200;
+            }
+            if(posY > 220) {
+                vacuum.charge();
+                remove();
             }
         }
-        if(posY > 220) {
-            // TODO dodać parta playerowi
-            // TODO usunác parta networkingowo
-            remove();
+        if (posX > 1600) {
+            vy += gravity;
+            posX += vx;
+            posY += vy;
+            if(posY < -200) {
+                posY = -200;
+                vx = 0;
+            }
         }
 
         updatePos();

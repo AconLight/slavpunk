@@ -10,6 +10,7 @@ import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.mygdx.events.Event;
 import com.mygdx.networking.NetworkApi;
 import com.mygdx.networking.NetworkManager;
+import com.mygdx.scenes.MySceneManager;
 
 import java.util.Arrays;
 import java.util.HashMap;
@@ -25,9 +26,12 @@ public class Enemy extends GameObject {
     Color pink, green, blue, yellow;
     Map<Integer,Color> colory;
     Random rand = new Random();
+    Stage stage;
+    public int health;
 
-    public Enemy(float x, float y, boolean isMine,String id, int head, int renka, int body, int weapon, int weapon_color, int eye, int eye_color, int legs, int legs_color, float scale){
+    public Enemy(Stage stage, float x, float y, boolean isMine,String id, int head, int renka, int body, int weapon, int weapon_color, int eye, int eye_color, int legs, int legs_color, float scale){
         super(2, id);
+        this.stage = stage;
         this.isMine = isMine;
         this.head = head;
         this.renka = renka;
@@ -39,11 +43,13 @@ public class Enemy extends GameObject {
         this.legs = legs;
         this.legs_color = legs_color;
 
+        health = (int) ((scale-2)*(scale-2));
+
         posX = x;
         posY = y;
         setPosition(x, y);
         this.scale = scale;
-        velocity = 3;
+        velocity = 5;
 
         colorInit();
         animationInit();
@@ -120,14 +126,29 @@ public class Enemy extends GameObject {
         updatePos();
 
         if(posX < 1700) {
-            getStage().addActor(new Part(true, "part" + NetworkApi.manager.myAddress.ip + NetworkApi.manager.myAddress.port));
-            // TODO networkingowo usuwac
-            remove();
+            die(0);
         }
 
         if (isMine) {
             sendPos();
         }
+    }
+
+    public void die(Integer seed) { // just damage
+        health--;
+        if (health <= 0) {
+            dieHard(seed);
+        }
+    }
+
+    public void dieHard(int seed) {
+        // if (stage != null)
+        MySceneManager.game.enemies.remove(this);
+        Random rand = new Random(seed/2);
+        for (int i = 0; i < rand.nextInt(3)+ 1; i++) {
+            stage.addActor(new Part(getX(), getY(), true, "part" + NetworkApi.manager.myAddress.ip + NetworkApi.manager.myAddress.port, seed+i));
+        }
+            remove();
     }
 
     public void updatePos() {
