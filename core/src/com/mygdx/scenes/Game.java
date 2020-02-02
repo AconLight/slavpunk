@@ -44,7 +44,7 @@ public class Game extends MyScene {
     public void act() {
         super.act();
 
-        if (i%4000 < 15*5 && i%5 == 0) {
+        if (i%2000 < 15*5 && i%5 == 0) {
             if(NetworkManager.networkManager.isHost) {
                 netSpawner.spawnMinionEveryWhere(i % 4000 / 5);
             }
