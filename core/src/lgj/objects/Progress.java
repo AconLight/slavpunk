@@ -10,22 +10,13 @@ import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.scenes.scene2d.ui.ProgressBar;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 
-public class Progress extends GameObject {
-
-    SpriteObject ship;
-    boolean isMine;
-    float posX, posY, scale;
-    float value;
+public class Progress {
+    float scale;
     ProgressBar bar;
     Skin skin;
 
-    public Progress(boolean isMine, String id, int x, int y, int width, int height, Color color) {
-        super(3, id);
-        this.isMine = isMine;
+    public Progress(int x, int y, int width, int height, Color color) {
 
-        setPosition(x,y);
-        posX = x;
-        posY = y;
         scale = 8;
         skin = new Skin();
         Pixmap pixmap = new Pixmap(10, height, Pixmap.Format.RGBA8888);
@@ -38,21 +29,14 @@ public class Progress extends GameObject {
         bar = new ProgressBar(0, 1, 0.01f, false, barStyle);
         bar.setWidth(width);
         bar.setHeight(height);
-        bar.setPosition(x,y);
+        bar.setPosition(x, y);
         bar.setValue(5);
+        bar.setZIndex(7);
+
     }
 
-    public void act(float delta) {
-        super.act(delta);
-        updatePos();
-        Gdx.app.log("progress bar", id);
-    }
-
-    public ProgressBar getBar() {return bar;}
-
-    public void updatePos() {
-        float x = getX();
-        float y = getY();
-        setPosition((posX + x) / 2, (posY + y) / 2);
+    public ProgressBar getBar() {
+        bar.remove();
+        return bar;
     }
 }

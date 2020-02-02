@@ -2,10 +2,12 @@ package lgj.objects;
 
 import assets.AssetLoader;
 import boost.GameObject;
+import boost.GameObjectManager;
 import boost.SpriteObject;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
 import com.badlogic.gdx.graphics.Color;
+import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.mygdx.events.Event;
 import com.mygdx.networking.NetworkApi;
@@ -24,13 +26,13 @@ public class Enemy extends GameObject {
     float posX, posY, scale, velocity;
     int head, renka, body, weapon, weapon_color, eye, eye_color, legs, legs_color;
     Color pink, green, blue, yellow;
-    Map<Integer,Color> colory;
+    Map<Integer, Color> colory;
     Random rand = new Random();
     Stage stage;
     public int health, maxHealth;
     Progress progress;
 
-    public Enemy(Stage stage, float x, float y, boolean isMine,String id, int head, int renka, int body, int weapon, int weapon_color, int eye, int eye_color, int legs, int legs_color, float scale){
+    public Enemy(Stage stage, float x, float y, boolean isMine, String id, int head, int renka, int body, int weapon, int weapon_color, int eye, int eye_color, int legs, int legs_color, float scale) {
         super(2, id);
         this.stage = stage;
         this.isMine = isMine;
@@ -43,13 +45,11 @@ public class Enemy extends GameObject {
         this.eye_color = eye_color;
         this.legs = legs;
         this.legs_color = legs_color;
+
+        health = (int) ((scale - 2) * (scale - 2));
         maxHealth = health;
 
-        health = (int) ((scale-2)*(scale-2));
-
-        progress = new Progress(true, "health" + id, 0, 300, 200, 30, Color.RED);
-        progress.index = 7;
-        addActor(progress.getBar());
+        progress = new Progress((int) (10 * scale), (int) (80 * scale), (int) (50 * scale), (int) (6 * scale), Color.RED);
 
         posX = x;
         posY = y;
@@ -63,21 +63,20 @@ public class Enemy extends GameObject {
 
     }
 
-    void colorInit(){
+    void colorInit() {
         colory = new HashMap<>();
         int id = 0;
-        pink = new Color(255/255f, 0/255f, 102/255f, 255/255f);
-        colory.put(++id,pink);
-        green = new Color(102/255f, 255/255f, 102/255f, 255/255f);
-        colory.put(++id,green);
-        blue = new Color(0/255f, 255/255f, 255/255f,255/255f);
-        colory.put(++id,blue);
-        yellow = new Color(255/255f, 204/255f, 0/255f,255/255f);
-        colory.put(++id,yellow);
+        pink = new Color(255 / 255f, 0 / 255f, 102 / 255f, 255 / 255f);
+        colory.put(++id, pink);
+        green = new Color(102 / 255f, 255 / 255f, 102 / 255f, 255 / 255f);
+        colory.put(++id, green);
+        blue = new Color(0 / 255f, 255 / 255f, 255 / 255f, 255 / 255f);
+        colory.put(++id, blue);
+        yellow = new Color(255 / 255f, 204 / 255f, 0 / 255f, 255 / 255f);
+        colory.put(++id, yellow);
     }
 
-    void animationInit(){
-
+    void animationInit() {
 
 
         legs_ = AssetLoader.getAnimation("enemy_legs", 2);
@@ -113,8 +112,7 @@ public class Enemy extends GameObject {
     }
 
 
-
-    void changeColor(){
+    void changeColor() {
         eye_.color = (colory.get(eye_color));
         weapon_.color = (colory.get(weapon_color));
         legs_.color = (colory.get(legs_color));
@@ -127,12 +125,15 @@ public class Enemy extends GameObject {
 
         if (isMine) {
             posX -= velocity;
-            posY = -200 + 20 + (float)(scale*10*Math.sin(posX/300f));
+            posY = -200 + 20 + (float) (scale * 10 * Math.sin(posX / 300f));
         }
+
+        progress.getBar().setPosition(posX + 10 * scale, posY + 80 * scale);
 
         updatePos();
 
-        if(posX < 1700) {
+        if (posX < 1700) {
+            ((Ship) GameObjectManager.gameObjects.get("ship" + NetworkApi.manager.myAddress.ip + NetworkApi.manager.myAddress.port)).dealDamage();
             die(0);
         }
 
@@ -143,7 +144,7 @@ public class Enemy extends GameObject {
 
     public void die(Integer seed) { // just damage
         health--;
-        progress.getBar().setValue((float)health/(float)maxHealth);
+        progress.getBar().setValue((float) health / (float) maxHealth);
         if (health <= 0) {
             dieHard(seed);
         }
@@ -152,17 +153,17 @@ public class Enemy extends GameObject {
     public void dieHard(int seed) {
         // if (stage != null)
         MySceneManager.game.enemies.remove(this);
-        Random rand = new Random(seed/2);
-        for (int i = 0; i < rand.nextInt(3)+ 1; i++) {
-            stage.addActor(new Part(getX(), getY(), true, "part" + NetworkApi.manager.myAddress.ip + NetworkApi.manager.myAddress.port, seed+i));
+        Random rand = new Random(seed / 2);
+        for (int i = 0; i < rand.nextInt(3) + 1; i++) {
+            stage.addActor(new Part(getX(), getY(), true, "part" + NetworkApi.manager.myAddress.ip + NetworkApi.manager.myAddress.port, seed + i));
         }
-            remove();
+        remove();
     }
 
     public void updatePos() {
         float x = getX();
         float y = getY();
-        setPosition((posX + x)/2, (posY + y)/2);
+        setPosition((posX + x) / 2, (posY + y) / 2);
     }
 
     public void sendPos() {
@@ -177,5 +178,11 @@ public class Enemy extends GameObject {
     public void setVelocity(float velocity) {
         this.velocity = velocity;
     }
-    
+
+    @Override
+    public void draw(Batch batch, float parentAlfa) {
+        super.draw(batch, parentAlfa);
+        progress.getBar().draw(batch, parentAlfa);
+    }
+
 }

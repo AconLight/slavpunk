@@ -16,7 +16,6 @@ import com.mygdx.networking.NetworkApi;
 import com.mygdx.networking.NetworkManager;
 
 
-
 public class Player extends GameObject {
 
     SpriteObject head, body, arm, legs, hamer;
@@ -57,7 +56,7 @@ public class Player extends GameObject {
         camZoom = 2;
         camDirectionZoom = 2;
         cam = stage.getCamera();
-        progress = new Progress(true, "health" + id, 400, 400, 100, 20, Color.BLUE);
+        progress = new Progress(400, 400, 100, 20, Color.BLUE);
 
         posX = 300;
         posY = 485;
@@ -286,7 +285,7 @@ public class Player extends GameObject {
 
         // Horizontal borders
         if (posY < 720) { // First floor
-            if(vacuum == null) {
+            if (vacuum == null) {
                 vacuum = (Vacuum) GameObjectManager.gameObjects.get("vacuum");
                 vacuum.parts.add(3);
                 vacuum.playerIds.add(id);
@@ -306,13 +305,13 @@ public class Player extends GameObject {
                 posX = 270;
             } else if (posX >= 1555) {
                 posX = 1555;
-                if(!isInCannon) {
+                if (!isInCannon) {
                     current = (CannonBase) GameObjectManager.gameObjects.get("cannonBase1");
                     current.use(id);
                     isInCannon = true;
                 }
             } else {
-                if(isInCannon) {
+                if (isInCannon) {
                     ((CannonBase) GameObjectManager.gameObjects.get("cannonBase1")).leave(id);
                     isInCannon = false;
                     current = null;
@@ -324,13 +323,13 @@ public class Player extends GameObject {
             } else {
                 if (posX >= 1635) {
                     posX = 1635;
-                    if(!isInCannon) {
+                    if (!isInCannon) {
                         current = (CannonBase) GameObjectManager.gameObjects.get("cannonBase2");
                         current.use(id);
                         isInCannon = true;
                     }
                 } else {
-                    if(isInCannon) {
+                    if (isInCannon) {
                         ((CannonBase) GameObjectManager.gameObjects.get("cannonBase2")).leave(id);
                         isInCannon = false;
                         current = null;
@@ -341,15 +340,15 @@ public class Player extends GameObject {
             if (posX < 300) {
                 posX = 300;
             } else {
-                if (posX >= 1710){
+                if (posX >= 1710) {
                     posX = 1710;
-                    if(!isInCannon) {
+                    if (!isInCannon) {
                         current = (CannonBase) GameObjectManager.gameObjects.get("cannonBase3");
                         current.use(id);
                         isInCannon = true;
                     }
                 } else {
-                    if(isInCannon) {
+                    if (isInCannon) {
                         ((CannonBase) GameObjectManager.gameObjects.get("cannonBase3")).leave(id);
                         isInCannon = false;
                         current = null;
@@ -372,8 +371,8 @@ public class Player extends GameObject {
             } else {
                 camDirectionZoom = 2f;
             }
-            camZoom = (camZoom + camDirectionZoom*delta)/(1+delta);
-            camOffset = camOffset.set((camDirection.x * delta + camOffset.x) / (1+delta), (camDirection.y * delta + camOffset.y) / (1+delta));
+            camZoom = (camZoom + camDirectionZoom * delta) / (1 + delta);
+            camOffset = camOffset.set((camDirection.x * delta + camOffset.x) / (1 + delta), (camDirection.y * delta + camOffset.y) / (1 + delta));
             cam.translate(-cam.position.x + posX + camOffset.x + camConstOffset.x, -cam.position.y + posY + camOffset.y + camConstOffset.y, 0);
             ((OrthographicCamera) cam).zoom = camZoom;
             cam.update();
@@ -383,7 +382,7 @@ public class Player extends GameObject {
     public void updatePos() {
         float x = getX();
         float y = getY();
-        setPosition((posX + x*5) / 6, (posY + y*5) / 6);
+        setPosition((posX + x * 5) / 6, (posY + y * 5) / 6);
     }
 
     private float lastSendX = posX;
