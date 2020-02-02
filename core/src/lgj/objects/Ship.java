@@ -26,7 +26,7 @@ public class Ship extends GameObject {
         super(1, id);
         this.isMine = isMine;
 
-        health = 150;
+        health = 50;
         maxHealth = health;
 
         healthBar = new Progress(200, 1750, 1900, 50, Color.RED);
@@ -54,7 +54,7 @@ public class Ship extends GameObject {
         super.act(delta);
         updatePos();
         i++;
-        if (i%20 == 0) {
+        if (i%100 == 0) {
             if (health < maxHealth)
                 health++;
         }
