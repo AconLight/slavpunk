@@ -7,6 +7,7 @@ import boost.SpriteObject;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
 import com.badlogic.gdx.graphics.Camera;
+import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.scenes.scene2d.Stage;
@@ -56,7 +57,7 @@ public class Player extends GameObject {
         camZoom = 2;
         camDirectionZoom = 2;
         cam = stage.getCamera();
-        progress = new Progress(true, "health" + id);
+        progress = new Progress(true, "health" + id, 400, 400, 100, 20, Color.BLUE);
 
         posX = 300;
         posY = 485;
