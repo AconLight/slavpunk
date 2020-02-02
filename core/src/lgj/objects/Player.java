@@ -352,7 +352,7 @@ public class Player extends GameObject {
     public void updatePos() {
         float x = getX();
         float y = getY();
-        setPosition((posX + x*19) / 20, (posY + y*19) / 20);
+        setPosition((posX + x*5) / 6, (posY + y*5) / 6);
     }
 
     private float lastSendX = posX;
