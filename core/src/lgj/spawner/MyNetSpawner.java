@@ -84,7 +84,7 @@ public class MyNetSpawner extends GameObject {
         int legs = rand.nextInt(3) + 1;
         int legs_color = rand.nextInt(4) + 1;
 
-        int x = 8000 + a * 400 + rand.nextInt(300);
+        int x = 8000 + a * 400 + rand.nextInt(150);
 
         float scale = 4 + rand.nextFloat()*2;
         String id = "enemy" + enemyNumb + NetworkApi.manager.myAddress.ip + NetworkApi.manager.myAddress.port;

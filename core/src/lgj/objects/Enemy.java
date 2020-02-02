@@ -121,6 +121,7 @@ public class Enemy extends GameObject {
 
         if (isMine) {
             posX -= velocity;
+            posY = -200 + 20 + (float)(scale*10*Math.sin(posX/300f));
         }
 
         updatePos();
