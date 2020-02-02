@@ -26,7 +26,7 @@ public class Ship extends GameObject {
         super(1, id);
         this.isMine = isMine;
 
-        health = 512;
+        health = 150;
         maxHealth = health;
 
         healthBar = new Progress(200, 1750, 1900, 50, Color.RED);
@@ -71,8 +71,8 @@ public class Ship extends GameObject {
         setPosition((posX + x) / 2, (posY + y) / 2);
     }
 
-    public void dealDamage() {
-        health--;
+    public void dealDamage(int dmg) {
+        health -= dmg;
         healthBar.getBar().setValue((float) health / (float) maxHealth);
         if (health <= 0) {
             if (NetworkManager.networkManager.isHost) {

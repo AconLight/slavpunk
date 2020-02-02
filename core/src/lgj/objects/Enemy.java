@@ -46,7 +46,7 @@ public class Enemy extends GameObject {
         this.legs = legs;
         this.legs_color = legs_color;
 
-        health = (int) ((scale - 2) * (scale - 2));
+        health = (int)(scale*2);
         maxHealth = health;
 
         progress = new Progress((int) (10 * scale), (int) (80 * scale), (int) (50 * scale), (int) (6 * scale), Color.RED);
@@ -133,8 +133,9 @@ public class Enemy extends GameObject {
         updatePos();
 
         if (posX < 1700) {
-            ((Ship) GameObjectManager.gameObjects.get("ship" + NetworkApi.manager.myAddress.ip + NetworkApi.manager.myAddress.port)).dealDamage();
-            die(0);
+            ((Ship) GameObjectManager.gameObjects.get("ship" + NetworkApi.manager.myAddress.ip + NetworkApi.manager.myAddress.port)).dealDamage(health);
+            dieHard(0);
+            NetworkManager.networkManager.addEventToSend(new Event(id + " dieHard int " + 0));
         }
 
         if (isMine) {
