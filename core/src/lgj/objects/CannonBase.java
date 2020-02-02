@@ -2,6 +2,7 @@ package lgj.objects;
 
 import assets.AssetLoader;
 import boost.GameObject;
+import boost.GameObjectManager;
 import boost.SpriteObject;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
@@ -54,7 +55,12 @@ public class CannonBase extends GameObject {
     }
 
     public void fix(String id) {
-
+        for (String address: playerIds) {
+            if (address.equals(id)) {
+                ((Player) GameObjectManager.gameObjects.get(id)).parts--;
+                break;
+            }
+        }
     }
 
     float prevSendRotation = 0;
@@ -70,7 +76,15 @@ public class CannonBase extends GameObject {
                 if(realRotation >= -69)
                     realRotation -= 0.5f;
             }
-            if (Gdx.input.isKeyJustPressed(Input.Keys.G)) {
+            boolean canShoot = true;
+            for (Integer p: parts){
+                if (p <= 0) {
+                    canShoot = false;
+                    break;
+                }
+            }
+
+            if (Gdx.input.isKeyJustPressed(Input.Keys.G) && canShoot) {
                 float vx = (float)(50*Math.cos(myRotation*Math.PI/180));
                 float vy = (float)(50*Math.sin(myRotation*Math.PI/180));
                 Proj.numb++;

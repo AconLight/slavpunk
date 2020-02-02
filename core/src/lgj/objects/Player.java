@@ -218,9 +218,11 @@ public class Player extends GameObject {
                         vacuum.pickPart(id);
                         NetworkManager.networkManager.addEventToSend(new Event("vacuum pickPart String " + id));
                     }
-                    if (isInCannon && canFix && false) {
-                        //current.fix(id);
-                        //NetworkManager.networkManager.addEventToSend(new Event(current.id " pickPart String " + id));
+                    if (isInCannon && canFix) {
+                        if (parts > 0) {
+                            current.fix(id);
+                            NetworkManager.networkManager.addEventToSend(new Event(current.id + " fix String " + id));
+                        }
                     }
                     canPick = false;
                     canFix = false;
@@ -278,7 +280,8 @@ public class Player extends GameObject {
             } else if (posX >= 1555) {
                 posX = 1555;
                 if(!isInCannon) {
-                    ((CannonBase) GameObjectManager.gameObjects.get("cannonBase1")).use(id);
+                    current = (CannonBase) GameObjectManager.gameObjects.get("cannonBase1");
+                    current.use(id);
                     isInCannon = true;
                 }
                 if (!isOnVacuum) {
@@ -289,6 +292,7 @@ public class Player extends GameObject {
                 if(isInCannon) {
                     ((CannonBase) GameObjectManager.gameObjects.get("cannonBase1")).leave(id);
                     isInCannon = false;
+                    current = null;
                 }
             }
         } else if (posY < 1090) { // Second floor
@@ -298,13 +302,15 @@ public class Player extends GameObject {
                 if (posX >= 1635) {
                     posX = 1635;
                     if(!isInCannon) {
-                        ((CannonBase) GameObjectManager.gameObjects.get("cannonBase2")).use(id);
+                        current = (CannonBase) GameObjectManager.gameObjects.get("cannonBase2");
+                        current.use(id);
                         isInCannon = true;
                     }
                 } else {
                     if(isInCannon) {
                         ((CannonBase) GameObjectManager.gameObjects.get("cannonBase2")).leave(id);
                         isInCannon = false;
+                        current = null;
                     }
                 }
             }
@@ -315,13 +321,15 @@ public class Player extends GameObject {
                 if (posX >= 1710){
                     posX = 1710;
                     if(!isInCannon) {
-                        ((CannonBase) GameObjectManager.gameObjects.get("cannonBase3")).use(id);
+                        current = (CannonBase) GameObjectManager.gameObjects.get("cannonBase3");
+                        current.use(id);
                         isInCannon = true;
                     }
                 } else {
                     if(isInCannon) {
                         ((CannonBase) GameObjectManager.gameObjects.get("cannonBase3")).leave(id);
                         isInCannon = false;
+                        current = null;
                     }
                 }
             }
