@@ -12,7 +12,7 @@ import com.mygdx.scenes.MySceneManager;
 
 public class Ship extends GameObject {
 
-    SpriteObject ship;
+    SpriteObject ship, boosters;
     boolean isMine;
     float posX, posY, scale;
     int health, maxHealth;
@@ -37,6 +37,7 @@ public class Ship extends GameObject {
         spriteInit();
 
         addActor(ship);
+        addActor(boosters);
     }
 
     void spriteInit() {
@@ -44,6 +45,8 @@ public class Ship extends GameObject {
         posY = 0;
         ship = AssetLoader.getAsset("ship", index);
         ship.scaleBy(scale);
+        boosters = AssetLoader.getAsset("boosters", index);
+        boosters.scaleBy(scale);
     }
 
     public void act(float delta) {

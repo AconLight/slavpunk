@@ -109,6 +109,7 @@ public class AssetLoader {
         createAsset("graphics/sprites/background.png", "background");
         createAsset("graphics/sprites/part.png", "part");
         createAsset("graphics/sprites/gameover.png", "gameover");
+        createAsset("graphics/sprites/boosters.png", "boosters");
 
         loadAnimations();
 

@@ -65,7 +65,6 @@ public class Player extends GameObject {
         camZoom = 2;
         camDirectionZoom = 2;
         cam = stage.getCamera();
-        progress = new Progress(400, 400, 100, 20, Color.BLUE);
 
         posX = 300;
         posY = 485;
@@ -182,12 +181,19 @@ public class Player extends GameObject {
 
     public void act(float delta) {
         super.act(delta);
+
+        if (myCol != null && progress == null) {
+            progress = new Progress(400, 400, 200, 30, myCol);
+        }
+
         if (Gdx.input.isKeyPressed(Input.Keys.ESCAPE)) {
             NetworkManager.networkManager.addEventToSend(new Event(id + " restartGame"));
             restartGame();
         }
 
-        progress.getBar().setValue((float)(parts)/(float)(maxParts));
+        if (progress != null) {
+            progress.getBar().setValue((float) (parts) / (float) (maxParts));
+        }
 
         prevRight = isRight;
         prevState = state;
@@ -383,7 +389,9 @@ public class Player extends GameObject {
                 }
             }
         }
-
+        if (progress != null) {
+            progress.getBar().setPosition(getX() + 30, getY() + 300);
+        }
         updatePos();
 
         if (isMine) {
@@ -408,7 +416,7 @@ public class Player extends GameObject {
 
     public void addParts() {
         parts += 1;
-        if(parts > maxParts) {
+        if (parts > maxParts) {
             parts = maxParts;
         }
     }
@@ -445,7 +453,9 @@ public class Player extends GameObject {
     @Override
     public void draw(Batch batch, float parentAlfa) {
         super.draw(batch, parentAlfa);
-        progress.getBar().draw(batch, parentAlfa);
+        if (progress != null) {
+            progress.getBar().draw(batch, parentAlfa);
+        }
     }
 
 }
