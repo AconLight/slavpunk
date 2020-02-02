@@ -4,29 +4,27 @@ import assets.AssetLoader;
 import boost.GameObject;
 import boost.SpriteObject;
 
-public class Elevator extends GameObject {
+public class Background extends GameObject {
 
-    SpriteObject elevator;
+    SpriteObject background;
     boolean isMine;
     float posX, posY, scale;
 
-    public Elevator(boolean isMine, String id) {
-        super(3, id);
+    public Background(boolean isMine, String id) {
+        super(0, id);
         this.isMine = isMine;
 
-        posX = 200;
-        posY = 260;
+        posX = -1750;
+        posY = -1000;
         scale = 8;
         spriteInit();
 
-        addActor(elevator);
+        addActor(background);
     }
 
     void spriteInit() {
-        posX = 0;
-        posY = 0;
-        elevator = AssetLoader.getAsset("elevator", index);
-        elevator.scaleBy(scale);
+        background = AssetLoader.getAsset("background", index);
+        background.scaleBy(scale);
     }
 
     public void act(float delta) {

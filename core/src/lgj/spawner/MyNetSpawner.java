@@ -21,6 +21,7 @@ public class MyNetSpawner extends GameObject {
     Pipes pipes;
     Stage stage;
     CannonBase cannonBase1, cannonBase2, cannonBase3;
+    Background background;
 
     public MyNetSpawner(Stage stage) {
         super(0, "spawner");
@@ -105,11 +106,13 @@ public class MyNetSpawner extends GameObject {
         elevator = new Elevator(true, "elevator" + NetworkApi.manager.myAddress.ip + NetworkApi.manager.myAddress.port);
         vacuum = new Vacuum(true, "vacuum" + NetworkApi.manager.myAddress.ip + NetworkApi.manager.myAddress.port);
         pipes = new Pipes(true, "pipes" + NetworkApi.manager.myAddress.ip + NetworkApi.manager.myAddress.port);
+        background = new Background(true, "background" + NetworkApi.manager.myAddress.ip + NetworkApi.manager.myAddress.port);
 
         stage.addActor(test);
         stage.addActor(ship);
         stage.addActor(elevator);
         stage.addActor(vacuum);
         stage.addActor(pipes);
+        stage.addActor(background);
     }
 }
