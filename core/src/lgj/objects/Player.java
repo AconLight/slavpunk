@@ -281,10 +281,6 @@ public class Player extends GameObject {
                     ((CannonBase) GameObjectManager.gameObjects.get("cannonBase1")).use(id);
                     isInCannon = true;
                 }
-                if (!isOnVacuum) {
-                    isOnVacuum = true;
-                    vacuum.setOn();
-                }
             } else {
                 if(isInCannon) {
                     ((CannonBase) GameObjectManager.gameObjects.get("cannonBase1")).leave(id);
