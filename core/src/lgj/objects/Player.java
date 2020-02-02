@@ -219,8 +219,8 @@ public class Player extends GameObject {
                         NetworkManager.networkManager.addEventToSend(new Event("vacuum pickPart String " + id));
                     }
                     if (isInCannon && canFix && false) {
-                        current.fix(id);
-                        NetworkManager.networkManager.addEventToSend(new Event(current.id " pickPart String " + id));
+                        //current.fix(id);
+                        //NetworkManager.networkManager.addEventToSend(new Event(current.id " pickPart String " + id));
                     }
                     canPick = false;
                     canFix = false;
