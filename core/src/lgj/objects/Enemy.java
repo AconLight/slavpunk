@@ -27,7 +27,8 @@ public class Enemy extends GameObject {
     Map<Integer,Color> colory;
     Random rand = new Random();
     Stage stage;
-    public int health;
+    public int health, maxHealth;
+    Progress progress;
 
     public Enemy(Stage stage, float x, float y, boolean isMine,String id, int head, int renka, int body, int weapon, int weapon_color, int eye, int eye_color, int legs, int legs_color, float scale){
         super(2, id);
@@ -42,8 +43,13 @@ public class Enemy extends GameObject {
         this.eye_color = eye_color;
         this.legs = legs;
         this.legs_color = legs_color;
+        maxHealth = health;
 
         health = (int) ((scale-2)*(scale-2));
+
+        progress = new Progress(true, "health" + id, 0, 300, 200, 30, Color.RED);
+        progress.index = 7;
+        addActor(progress.getBar());
 
         posX = x;
         posY = y;
@@ -137,6 +143,7 @@ public class Enemy extends GameObject {
 
     public void die(Integer seed) { // just damage
         health--;
+        progress.getBar().setValue((float)health/(float)maxHealth);
         if (health <= 0) {
             dieHard(seed);
         }

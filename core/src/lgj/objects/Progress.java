@@ -19,22 +19,26 @@ public class Progress extends GameObject {
     ProgressBar bar;
     Skin skin;
 
-    public Progress(boolean isMine, String id) {
+    public Progress(boolean isMine, String id, int x, int y, int width, int height, Color color) {
         super(3, id);
         this.isMine = isMine;
 
-        posX = 200;
-        posY = 260;
+        setPosition(x,y);
+        posX = x;
+        posY = y;
         scale = 8;
         skin = new Skin();
-        Pixmap pixmap = new Pixmap(10, 10, Pixmap.Format.RGBA8888);
+        Pixmap pixmap = new Pixmap(10, height, Pixmap.Format.RGBA8888);
         pixmap.setColor(Color.WHITE);
         pixmap.fill();
         skin.add("white", new Texture(pixmap));
 
-        ProgressBar.ProgressBarStyle barStyle = new ProgressBar.ProgressBarStyle(skin.newDrawable("white", Color.DARK_GRAY), skin.newDrawable("white", Color.RED));
+        ProgressBar.ProgressBarStyle barStyle = new ProgressBar.ProgressBarStyle(skin.newDrawable("white", Color.DARK_GRAY), skin.newDrawable("white", color));
         barStyle.knobBefore = barStyle.knob;
-        bar = new ProgressBar(0, 10, 0.5f, false, barStyle);
+        bar = new ProgressBar(0, 1, 0.01f, false, barStyle);
+        bar.setWidth(width);
+        bar.setHeight(height);
+        bar.setPosition(x,y);
         bar.setValue(5);
     }
 
