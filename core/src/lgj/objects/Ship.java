@@ -21,12 +21,12 @@ public class Ship extends GameObject {
     public void gameOver() {
         MySceneManager.switchToScene(MySceneManager.pause);
     }
-
+    int i = 0;
     public Ship(boolean isMine, String id) {
         super(1, id);
         this.isMine = isMine;
 
-        health = 100;
+        health = 512;
         maxHealth = health;
 
         healthBar = new Progress(200, 1750, 1900, 50, Color.RED);
@@ -52,6 +52,11 @@ public class Ship extends GameObject {
     public void act(float delta) {
         super.act(delta);
         updatePos();
+        i++;
+        if (i%20 == 0) {
+            if (health < maxHealth)
+                health++;
+        }
     }
 
     public void updatePos() {
