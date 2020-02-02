@@ -15,6 +15,7 @@ import com.mygdx.networking.NetworkApi;
 import com.mygdx.networking.NetworkManager;
 
 
+
 public class Player extends GameObject {
 
     SpriteObject head, body, arm, legs, hamer;
@@ -25,6 +26,7 @@ public class Player extends GameObject {
     float gravity = 0;
     boolean isInCannon = false;
     Vacuum vacuum;
+    Progress progress;
 
     final int elevatorLeft = 415;
     final int elevatorRight = 560;
@@ -54,6 +56,7 @@ public class Player extends GameObject {
         camZoom = 2;
         camDirectionZoom = 2;
         cam = stage.getCamera();
+        progress = new Progress(true, "health" + id);
 
         posX = 300;
         posY = 485;
@@ -68,6 +71,7 @@ public class Player extends GameObject {
         addActor(body);
         addActor(arm);
         addActor(legs);
+        addActor(progress.bar);
     }
 
     void animationInit() {
