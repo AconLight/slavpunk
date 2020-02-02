@@ -151,12 +151,34 @@ public class Player extends GameObject {
     boolean canPick = false;
     boolean canFix = false;
 
+    boolean isAddedToC1 = false;
+    boolean isAddedToC2 = false;
+    boolean isAddedToC3 = false;
+
     public void act(float delta) {
         super.act(delta);
 
         prevRight = isRight;
         prevState = state;
         prevStrike = isStrike;
+
+        if (!isAddedToC1) {
+            isAddedToC1 = true;
+            ((CannonBase) GameObjectManager.gameObjects.get("cannonBase1")).parts.add(3);
+            ((CannonBase) GameObjectManager.gameObjects.get("cannonBase1")).playerIds.add(id);
+        }
+
+        if (!isAddedToC2) {
+            isAddedToC2 = true;
+            ((CannonBase) GameObjectManager.gameObjects.get("cannonBase2")).parts.add(3);
+            ((CannonBase) GameObjectManager.gameObjects.get("cannonBase2")).playerIds.add(id);
+        }
+
+        if (!isAddedToC3) {
+            isAddedToC3 = true;
+            ((CannonBase) GameObjectManager.gameObjects.get("cannonBase3")).parts.add(3);
+            ((CannonBase) GameObjectManager.gameObjects.get("cannonBase3")).playerIds.add(id);
+        }
 
         boolean isInElevator = (posX >= elevatorLeft && posX <= elevatorRight);
 

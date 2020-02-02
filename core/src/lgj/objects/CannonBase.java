@@ -55,11 +55,18 @@ public class CannonBase extends GameObject {
     }
 
     public void fix(String id) {
+        int i = 0;
         for (String address: playerIds) {
             if (address.equals(id)) {
                 ((Player) GameObjectManager.gameObjects.get(id)).parts--;
+                parts.set(i, parts.get(i) + 1);
                 break;
             }
+            i++;
+        }
+        Gdx.app.log("CannonBase", "fix");
+        for (int p: parts) {
+            Gdx.app.log("CannonBase", "part: " + p);
         }
     }
 
@@ -118,6 +125,10 @@ public class CannonBase extends GameObject {
         }
         getStage().addActor(new Proj(myIsMine, id,
                 cannon.getX() + getX(), cannon.getY() + getY(), vx, vy));
+
+        for (int i = 0; i < parts.size(); i++){
+            parts.set(i, parts.get(i)- 1);
+        }
     }
 
     public void use(String playerId) {
