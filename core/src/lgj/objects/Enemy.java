@@ -2,10 +2,12 @@ package lgj.objects;
 
 import assets.AssetLoader;
 import boost.GameObject;
+import boost.GameObjectManager;
 import boost.SpriteObject;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
 import com.badlogic.gdx.graphics.Color;
+import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.mygdx.events.Event;
 import com.mygdx.networking.NetworkApi;
@@ -48,7 +50,6 @@ public class Enemy extends GameObject {
         maxHealth = health;
 
         progress = new Progress( (int)(10*scale), (int)(80*scale), (int)(50*scale), (int)(6*scale), Color.RED);
-        addActor(progress.getBar());
 
         posX = x;
         posY = y;
@@ -129,6 +130,8 @@ public class Enemy extends GameObject {
             posY = -200 + 20 + (float)(scale*10*Math.sin(posX/300f));
         }
 
+        progress.getBar().setPosition(posX + 10*scale, posY + 80*scale);
+
         updatePos();
 
         if(posX < 1700) {
@@ -142,7 +145,6 @@ public class Enemy extends GameObject {
 
     public void die(Integer seed) { // just damage
         health--;
-        Gdx.app.log("helt", health + " " + maxHealth + "" + (float)health/(float)maxHealth);
         progress.getBar().setValue((float)health/(float)maxHealth);
         if (health <= 0) {
             dieHard(seed);
@@ -176,6 +178,12 @@ public class Enemy extends GameObject {
 
     public void setVelocity(float velocity) {
         this.velocity = velocity;
+    }
+
+    @Override
+    public void draw(Batch batch, float parentAlfa) {
+        super.draw(batch, parentAlfa);
+        progress.getBar().draw(batch,parentAlfa);
     }
     
 }
