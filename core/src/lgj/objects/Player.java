@@ -46,7 +46,6 @@ public class Player extends GameObject {
         camDirection = new Vector2();
         camZoom = 2;
         camDirectionZoom = 2;
-
         cam = stage.getCamera();
 
         posX = 300;

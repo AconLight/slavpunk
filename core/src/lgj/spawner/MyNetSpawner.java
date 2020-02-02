@@ -82,18 +82,21 @@ public class MyNetSpawner extends GameObject {
         int legs_color = rand.nextInt(4) + 1;
 
         int x = 4000 + a * 400 + rand.nextInt(300);
+
+        float scale = 4 + rand.nextFloat()*2;
+
         spawnNextWave(x,
-                head, renka, body, weapon, weapon_color, eye, eye_color, legs, legs_color
+                head, renka, body, weapon, weapon_color, eye, eye_color, legs, legs_color, scale
         );
         NetworkManager.networkManager.addEventToSend(new Event("spawner spawnNextWave int " + x + " int " +
-                head + " int " + renka + " int " + body + " int " + weapon + " int " + weapon_color + " int " + eye + " int " + eye_color + " int " + legs + " int " + legs_color
+                head + " int " + renka + " int " + body + " int " + weapon + " int " + weapon_color + " int " + eye + " int " + eye_color + " int " + legs + " int " + legs_color + " float " + scale
         ));
     }
 
-    public void spawnNextWave(Integer x,  Integer head, Integer renka, Integer body, Integer weapon, Integer weapon_color, Integer eye, Integer eye_color, Integer legs, Integer legs_color ) {
+    public void spawnNextWave(Integer x,  Integer head, Integer renka, Integer body, Integer weapon, Integer weapon_color, Integer eye, Integer eye_color, Integer legs, Integer legs_color, Float scale) {
 
         stage.addActor(new Enemy(x, 200, true, "enemy" + enemyNumb,
-            head, renka, body, weapon, weapon_color, eye, eye_color, legs, legs_color
+            head, renka, body, weapon, weapon_color, eye, eye_color, legs, legs_color, scale
         ));
     }
 

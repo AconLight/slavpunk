@@ -26,7 +26,7 @@ public class Enemy extends GameObject {
     Map<Integer,Color> colory;
     Random rand = new Random();
 
-    public Enemy(float x, float y, boolean isMine, String id, int head, int renka, int body, int weapon, int weapon_color, int eye, int eye_color, int legs, int legs_color){
+    public Enemy(float x, float y, boolean isMine,String id, int head, int renka, int body, int weapon, int weapon_color, int eye, int eye_color, int legs, int legs_color, float scale){
         super(2, id);
         this.isMine = isMine;
         this.head = head;
@@ -42,7 +42,7 @@ public class Enemy extends GameObject {
         posX = x;
         posY = y;
         setPosition(x, y);
-        scale = 4 + rand.nextFloat()*2;
+        this.scale = scale;
         velocity = 3;
 
         colorInit();
