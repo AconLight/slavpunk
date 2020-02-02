@@ -37,7 +37,7 @@ public class Vacuum extends GameObject {
             if (id.equals(playerIds.get(i))) {
                 if (parts.get(i) > 0) {
                     parts.set(i, parts.get(i)-1);
-                    ((Player)GameObjectManager.gameObjects.get(id)).parts++;
+                    ((Player)GameObjectManager.gameObjects.get(id)).addParts();
                     Gdx.app.log("Vacuum picked", "picked");
                 }
             }
