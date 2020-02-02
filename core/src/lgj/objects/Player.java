@@ -9,6 +9,7 @@ import com.badlogic.gdx.Input;
 import com.badlogic.gdx.graphics.Camera;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.OrthographicCamera;
+import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.mygdx.events.Event;
@@ -51,10 +52,11 @@ public class Player extends GameObject {
     CannonBase current;
 
     public int parts;
+    public int maxParts = 10;
 
     public Player(Stage stage, boolean isMine, String id) {
         super(5, id);
-        parts = 0;
+        parts = 5;
         this.isMine = isMine;
         isOnVacuum = false;
         camOffset = new Vector2();
@@ -79,7 +81,6 @@ public class Player extends GameObject {
         addActor(body);
         addActor(arm);
         addActor(legs);
-        addActor(progress.bar);
 
         MySceneManager.game.players.add(this);
     }
@@ -185,6 +186,8 @@ public class Player extends GameObject {
             NetworkManager.networkManager.addEventToSend(new Event(id + " restartGame"));
             restartGame();
         }
+
+        progress.getBar().setValue((float)(parts)/(float)(maxParts));
 
         prevRight = isRight;
         prevState = state;
@@ -403,6 +406,13 @@ public class Player extends GameObject {
         }
     }
 
+    public void addParts() {
+        parts += 1;
+        if(parts > maxParts) {
+            parts = maxParts;
+        }
+    }
+
     public void updatePos() {
         float x = getX();
         float y = getY();
@@ -430,6 +440,12 @@ public class Player extends GameObject {
     public void updatePos(Float posX2, Float posY2) {
         posX = posX2;
         posY = posY2;
+    }
+
+    @Override
+    public void draw(Batch batch, float parentAlfa) {
+        super.draw(batch, parentAlfa);
+        progress.getBar().draw(batch, parentAlfa);
     }
 
 }

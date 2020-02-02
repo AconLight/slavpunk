@@ -67,7 +67,7 @@ public class CannonBase extends GameObject {
         for (String address : playerIds) {
             if (address.equals(id)) {
                 ((Player) GameObjectManager.gameObjects.get(id)).parts--;
-                parts.set(i, parts.get(i) + 1);
+                parts.set(i, parts.get(i) + 30);
                 break;
             }
             i++;
