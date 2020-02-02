@@ -169,19 +169,19 @@ public class Player extends GameObject {
 
         if (!isAddedToC1) {
             isAddedToC1 = true;
-            ((CannonBase) GameObjectManager.gameObjects.get("cannonBase1")).parts.add(3);
+            ((CannonBase) GameObjectManager.gameObjects.get("cannonBase1")).parts.add(300);
             ((CannonBase) GameObjectManager.gameObjects.get("cannonBase1")).playerIds.add(id);
         }
 
         if (!isAddedToC2) {
             isAddedToC2 = true;
-            ((CannonBase) GameObjectManager.gameObjects.get("cannonBase2")).parts.add(3);
+            ((CannonBase) GameObjectManager.gameObjects.get("cannonBase2")).parts.add(300);
             ((CannonBase) GameObjectManager.gameObjects.get("cannonBase2")).playerIds.add(id);
         }
 
         if (!isAddedToC3) {
             isAddedToC3 = true;
-            ((CannonBase) GameObjectManager.gameObjects.get("cannonBase3")).parts.add(3);
+            ((CannonBase) GameObjectManager.gameObjects.get("cannonBase3")).parts.add(300);
             ((CannonBase) GameObjectManager.gameObjects.get("cannonBase3")).playerIds.add(id);
         }
 
