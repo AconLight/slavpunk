@@ -8,6 +8,7 @@ import com.mygdx.gameObjects.NetSpawner;
 import com.mygdx.networking.NetworkApi;
 import com.mygdx.networking.NetworkManager;
 import lgj.objects.Enemy;
+import lgj.objects.Player;
 import lgj.spawner.MyNetSpawner;
 import java.util.Random;
 import java.util.ArrayList;
@@ -17,6 +18,8 @@ public class Game extends MyScene {
     MyNetSpawner netSpawner;
 
     public static ArrayList<Enemy> enemies = new ArrayList<>();
+
+    public static ArrayList<Player> players = new ArrayList<>();
 
     public static int playersNumb = 0;
 

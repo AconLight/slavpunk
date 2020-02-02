@@ -14,6 +14,7 @@ import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.mygdx.events.Event;
 import com.mygdx.networking.NetworkApi;
 import com.mygdx.networking.NetworkManager;
+import com.mygdx.scenes.MySceneManager;
 
 
 public class Player extends GameObject {
@@ -79,14 +80,7 @@ public class Player extends GameObject {
         addActor(legs);
         addActor(progress.bar);
 
-
-        if (NetworkManager.networkManager.isHost) {
-            myCol = colors[colNumb];
-            NetworkManager.networkManager.addEventToSend(new Event("id setMyCol int " + colNumb));
-            colNumb++;
-        }
-
-
+        MySceneManager.game.players.add(this);
     }
 
     public void setMyCol(Integer number) {
