@@ -5,6 +5,8 @@ import boost.GameObject;
 import boost.SpriteObject;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
+import com.mygdx.events.Event;
+import com.mygdx.networking.NetworkManager;
 
 public class CannonBase extends GameObject {
 
@@ -12,6 +14,8 @@ public class CannonBase extends GameObject {
     boolean isMine;
     float posX, posY, scale;
     String playerUsing = "";
+    private float realRotation;
+    private float myRotation;
 
     public CannonBase(boolean isMine, String id, int x, int y) {
         super(4, id);
@@ -34,18 +38,33 @@ public class CannonBase extends GameObject {
         cannon.setOrigin(50, 50);
     }
 
+    public void setRotation(Float rot) {
+        realRotation = rot;
+    }
+
+    float prevSendRotation = 0;
+
     public void act(float delta) {
         super.act(delta);
         if (!playerUsing.equals("")) {
             if (Gdx.input.isKeyPressed(Input.Keys.UP)) {
-                if(cannon.getRotation() <= 38)
-                cannon.rotateBy(0.5f);
+                if(realRotation <= 38)
+                    realRotation += 0.5f;
             }
             if (Gdx.input.isKeyPressed(Input.Keys.DOWN)) {
-                if(cannon.getRotation() >= -69) cannon.rotateBy(-0.5f);
+                if(realRotation >= -69)
+                    realRotation -= 0.5f;
             }
         }
-        //updatePos();
+
+        myRotation = (realRotation*9 + myRotation) / 10;
+        cannon.rotateBy(-cannon.getRotation() + myRotation);
+        if (!playerUsing.equals("")) {
+            if ((prevSendRotation - realRotation) * (prevSendRotation - realRotation) > 1) {
+                NetworkManager.networkManager.addEventToSend(new Event(id + " setRotation " + "float " + realRotation));
+                prevSendRotation = realRotation;
+            }
+        }
     }
 
     public void updatePos() {
