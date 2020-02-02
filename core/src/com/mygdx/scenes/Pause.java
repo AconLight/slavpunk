@@ -2,8 +2,11 @@ package com.mygdx.scenes;
 
 import assets.AssetLoader;
 import boost.GameObject;
+import boost.GameObjectManager;
 import boost.MyScene;
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.Input;
+import lgj.objects.Ship;
 
 public class Pause extends MyScene {
     GameObject splash;
@@ -24,5 +27,11 @@ public class Pause extends MyScene {
         super.act();
         time += Gdx.graphics.getDeltaTime();
         splash.alfa = time/2;
+        if (splash.alfa > 1) {
+            splash.alfa = 1;
+            if (Gdx.input.isKeyPressed(Input.Keys.ANY_KEY)) {
+                ((Ship)GameObjectManager.gameObjects.get("ship")).gameOver();
+            }
+        }
     }
 }

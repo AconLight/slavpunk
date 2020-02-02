@@ -18,7 +18,10 @@ public class Ship extends GameObject {
     Progress healthBar;
 
     public void gameOver() {
-
+        if (NetworkManager.networkManager.isHost) {
+            NetworkManager.networkManager.addEventToSend(new Event("ship gameOver"));
+            gameOver();
+        }
     }
 
     public Ship(boolean isMine, String id) {
