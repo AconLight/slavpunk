@@ -80,7 +80,7 @@ public class CannonBase extends GameObject {
             }
         }
 
-        myRotation = (realRotation + myRotation*9) / 10;
+        myRotation = (realRotation + myRotation*5) / 6;
         cannon.rotateBy(-cannon.getRotation() + myRotation);
         if (!playerUsing.equals("")) {
             if ((prevSendRotation - realRotation) * (prevSendRotation - realRotation) > 1.5) {
