@@ -26,6 +26,7 @@ public class CannonBase extends GameObject {
     public ArrayList<Integer> parts;
     public ArrayList<String> playerIds;
     public ArrayList<Progress> bars;
+    public int max = 300;
 
     //;  dzwiek strzelania
 
@@ -171,8 +172,9 @@ public class CannonBase extends GameObject {
     @Override
     public void draw(Batch batch, float parentAlfa) {
         super.draw(batch, parentAlfa);
-        for (Progress bar : bars) {
-            bar.getBar().draw(batch, parentAlfa);
+        for (int i = 0; i <  bars.size(); i++ ) {
+            bars.get(i).getBar().setValue((float)(parts.get(i))/(float)(max));
+            bars.get(i).getBar().draw(batch, parentAlfa);
         }
     }
 }
