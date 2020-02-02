@@ -67,6 +67,7 @@ public class Player extends GameObject {
 
         posX = 300;
         posY = 485;
+        setPosition(posX, posY);
         scale = 4;
         velocity = 10;
         isRight = "right";
@@ -173,8 +174,16 @@ public class Player extends GameObject {
     boolean isAddedToC2 = false;
     boolean isAddedToC3 = false;
 
+    public void restartGame() {
+        MySceneManager.game.restart();
+    }
+
     public void act(float delta) {
         super.act(delta);
+        if (Gdx.input.isKeyPressed(Input.Keys.ESCAPE)) {
+            NetworkManager.networkManager.addEventToSend(new Event(id + " restartGame"));
+            restartGame();
+        }
 
         prevRight = isRight;
         prevState = state;
