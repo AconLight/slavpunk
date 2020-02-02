@@ -18,7 +18,7 @@ public class Intro extends MyScene {
         time = 0;
     }
 
-    float k = 0.1f;
+    float k = 5f;
     boolean flag = true, flag2 = true;
     public void act() {
         super.act();
