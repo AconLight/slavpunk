@@ -430,10 +430,12 @@ public class Player extends GameObject {
     private float lastSendX = posX;
     private float lastSendY = posY;
 
+    int sendPosI = 0;
+
     public void sendPos() {
         float dx = posX - lastSendX;
         float dy = posY - lastSendY;
-        if (dy * dy + dx * dx > 10000) {
+        if (dy * dy + dx * dx > 250 || sendPosI++%40 == 0) {
             lastSendX = posX;
             lastSendY = posY;
             NetworkManager.networkManager.addEventToSend(new Event(id + " updatePos float " + posX + " float " + posY));
