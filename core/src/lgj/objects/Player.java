@@ -186,7 +186,7 @@ public class Player extends GameObject {
             progress = new Progress(400, 400, 200, 30, myCol);
         }
 
-        if (Gdx.input.isKeyPressed(Input.Keys.ESCAPE)) {
+        if (Gdx.input.isKeyJustPressed(Input.Keys.ESCAPE) && isMine) {
             NetworkManager.networkManager.addEventToSend(new Event(id + " restartGame"));
             restartGame();
         }
@@ -430,10 +430,12 @@ public class Player extends GameObject {
     private float lastSendX = posX;
     private float lastSendY = posY;
 
+    int sendPosI = 0;
+
     public void sendPos() {
         float dx = posX - lastSendX;
         float dy = posY - lastSendY;
-        if (dy * dy + dx * dx > 100) {
+        if (dy * dy + dx * dx > 250 || sendPosI++%40 == 0) {
             lastSendX = posX;
             lastSendY = posY;
             NetworkManager.networkManager.addEventToSend(new Event(id + " updatePos float " + posX + " float " + posY));

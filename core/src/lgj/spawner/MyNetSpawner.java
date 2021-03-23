@@ -111,7 +111,7 @@ public class MyNetSpawner extends GameObject {
         vacuum = new Vacuum(true, "vacuum");
         test = new Player(stage,true, "player" + NetworkApi.manager.myAddress.ip + NetworkApi.manager.myAddress.port);
         MySceneManager.game.playersNumb++;
-        ship = new Ship(true, "ship" + NetworkApi.manager.myAddress.ip + NetworkApi.manager.myAddress.port);
+        ship = new Ship(true, "ship");
         elevator = new Elevator(true, "elevator" + NetworkApi.manager.myAddress.ip + NetworkApi.manager.myAddress.port);
         pipes = new Pipes(true, "pipes" + NetworkApi.manager.myAddress.ip + NetworkApi.manager.myAddress.port);
         background = new Background(true, "background" + NetworkApi.manager.myAddress.ip + NetworkApi.manager.myAddress.port);

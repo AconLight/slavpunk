@@ -75,7 +75,7 @@ public class Game extends MyScene {
 
     public void act() {
         super.act();
-        if (i == 50) {
+        if (i == 200 && players.size() > 0) {
             players.sort(Comparator.comparing(v -> v.id));
 
             ((Player) GameObjectManager.gameObjects.get(players.get(0).id)).myCol = Color.GREEN;
@@ -86,6 +86,7 @@ public class Game extends MyScene {
                 ((Player) GameObjectManager.gameObjects.get(players.get(2).id)).myCol = Color.PURPLE;
             }
         }
+        Gdx.app.log("GAME" , "players.size: " + players.size());
 
 
         if (i % waveDur < waveNumb * 15 && i % 15 == 0) {

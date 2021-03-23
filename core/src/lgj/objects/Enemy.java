@@ -133,7 +133,7 @@ public class Enemy extends GameObject {
         updatePos();
 
         if (posX < 1700) {
-            ((Ship) GameObjectManager.gameObjects.get("ship" + NetworkApi.manager.myAddress.ip + NetworkApi.manager.myAddress.port)).dealDamage(health);
+            ((Ship) GameObjectManager.gameObjects.get("ship")).dealDamage(health);
             dieHard(0);
             NetworkManager.networkManager.addEventToSend(new Event(id + " dieHard int " + 0));
         }
