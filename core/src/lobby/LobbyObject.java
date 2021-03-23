@@ -75,9 +75,9 @@ public class LobbyObject extends GameObject {
         String port = address2[1];
         Address address3 = new Address(ip, Integer.parseInt(port));
         NetworkManager.networkManager.addNetAddress(address3);
-        NetworkManager.networkManager.addEventToSend(new Event("lobby addNewPlayer String " + NetworkApi.manager.myAddress.ip + " int " + NetworkApi.manager.myAddress.port));
+        NetworkManager.networkManager.addEventToSend(new Event("lobby addNewPlayer String " + "25.91.95.188" + " int " + NetworkApi.manager.myAddress.port));
         addNewPlayer(NetworkApi.manager.myAddress.ip, NetworkApi.manager.myAddress.port);
-        NetworkManager.networkManager.addEventToSend(new Event("accept showAccept String " + NetworkApi.manager.myAddress.ip + " int " + NetworkApi.manager.myAddress.port + " int " + players.size()));
+        NetworkManager.networkManager.addEventToSend(new Event("accept showAccept String " + "25.91.95.188" + " int " + NetworkApi.manager.myAddress.port + " int " + players.size()));
     }
 
     public void addNewPlayer(String hostIp, Integer hostPort) {
@@ -92,6 +92,7 @@ public class LobbyObject extends GameObject {
         PlayerLobbyIcon p = new PlayerLobbyIcon(isA, players.size());
         this.players.add(p);
         addActor(p);
+
         host = new Address(hostIp, hostPort);
     }
 

@@ -26,7 +26,7 @@ public class Ship extends GameObject {
         super(1, id);
         this.isMine = isMine;
 
-        health = 50;
+        health = 50000;
         maxHealth = health;
 
         healthBar = new Progress(200, 1750, 1900, 50, Color.RED);
